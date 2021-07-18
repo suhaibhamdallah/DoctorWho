@@ -91,3 +91,146 @@ VALUES
 		NULL
 	);
 
+-- 4) This statement insert 5 records to tblCompanion
+INSERT INTO tblCompanion(
+	CompanionName,
+	WhoPlayed
+)
+VALUES 
+	(
+		'Suhaib Hamdallah',
+		NULL
+	),
+	(
+		'Anas Zakarneh',
+		NULL
+	),
+	(
+		'Mohammad Abu-Qasedo',
+		NULL
+	),
+	(
+		'Zaid Noor',
+		NULL
+	),
+	(
+		'Yazan Fouqha',
+		NULL
+	);
+
+-- 5) This statement insert 5 records to tblEpisode
+INSERT INTO tblEpisode(
+	SeriesNumber,
+	EpisodeNumber,
+	EpisodeType,
+	EpisodeTitle,
+	EpisodeDate,
+	AuthorId,
+	DoctorId,
+	Notes
+)
+VALUES 
+	(
+		1,
+		1,
+		'TYPE 1',
+		'Title 1.1',
+		'2018-01-01',
+		1,
+		1,
+		NULL
+	),
+	(
+		1,
+		2,
+		'TYPE 2',
+		'Title 1.2',
+		'2018-01-02',
+		2,
+		2,
+		NULL
+	),
+	(
+		1,
+		3,
+		'TYPE 1',
+		'Title 1.3',
+		'2018-01-03',
+		3,
+		3,
+		NULL
+	),
+	(
+		1,
+		4,
+		'TYPE 2',
+		'Title 1.4',
+		'2018-01-04',
+		4,
+		4,
+		NULL
+	),
+	(
+		1,
+		5,
+		'TYPE 3',
+		'Title 1.5',
+		'2018-01-05',
+		5,
+		NULL,
+		NULL
+	);
+
+-- 6) This statement insert 5 records to tblEpisodeCompanion
+INSERT INTO tblEpisodeCompanion(
+	EpisodeId,
+	CompanionId
+)
+VALUES 
+	(
+		1,
+		1
+	),
+	(
+		2,
+		2
+	),
+	(
+		1,
+		3
+	),
+	(
+		4,
+		1
+	),
+	(
+		NULL,
+		5
+	);
+
+-- 7) This statement insert 5 records to tblEpisodeEnemy
+INSERT INTO tblEpisodeEnemy(
+	EpisodeId,
+	EnemyId
+)
+VALUES 
+	(
+		1,
+		1
+	),
+	(
+		2,
+		2
+	),
+	(
+		3,
+		3
+	),
+	(
+		4,
+		4
+	),
+	(
+		5,
+		5
+	);
