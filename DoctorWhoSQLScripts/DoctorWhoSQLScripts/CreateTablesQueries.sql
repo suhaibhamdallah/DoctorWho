@@ -11,7 +11,7 @@ CREATE TABLE tblAuthor (
 	AuthorName varchar(50) NOT NULL
 );
 
--- 3) This statement create Author table
+-- 3) This statement create Doctor table
 CREATE TABLE tblDoctor (
 	DoctorId int IDENTITY(1,1) PRIMARY KEY,
 	DoctorNumber int NOT NULL UNIQUE,

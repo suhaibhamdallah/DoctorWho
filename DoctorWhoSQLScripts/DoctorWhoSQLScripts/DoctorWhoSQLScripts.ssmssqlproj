@@ -19,11 +19,17 @@
     </LogicalFolder>
     <LogicalFolder Name="Queries" Type="0" Sorted="true">
       <Items>
-        <FileNode Name="CreateTables.sql">
+        <FileNode Name="CreateTablesQueries.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:DESKTOP-EDE547A:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>DESKTOP-EDE547A</AssociatedConnSrvName>
           <AssociatedConnUserName />
-          <FullPath>CreateTables.sql</FullPath>
+          <FullPath>CreateTablesQueries.sql</FullPath>
+        </FileNode>
+        <FileNode Name="InsertRecordsQueries.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:DESKTOP-EDE547A:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>DESKTOP-EDE547A</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>InsertRecordsQueries.sql</FullPath>
         </FileNode>
       </Items>
     </LogicalFolder>
