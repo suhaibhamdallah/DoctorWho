@@ -1,5 +1,6 @@
-ALTER VIEW viewEpisodes AS
-SELECT tblDoctor.DoctorName, tblAuthor.AuthorName,
+CREATE OR ALTER VIEW viewEpisodes AS
+SELECT  tblDoctor.DoctorName,
+		tblAuthor.AuthorName,
 		dbo.fnCompanions(tblEpisode.EpisodeId) as Companions,
 		dbo.fnEnemies(tblEpisode.EpisodeId) as Enemies
 FROM tblEpisode

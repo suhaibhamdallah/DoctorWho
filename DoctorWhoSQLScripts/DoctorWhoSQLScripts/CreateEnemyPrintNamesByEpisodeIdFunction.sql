@@ -1,17 +1,17 @@
-CREATE FUNCTION fnEnemies (
+CREATE OR ALTER FUNCTION fnEnemies (
 	@episodeId int
 )
 RETURNS varchar(MAX) AS
 BEGIN
-	DECLARE @return_value varchar(MAX)
+	DECLARE @enemy_names varchar(MAX)
 
-	SET @return_value = (
+	SET @enemy_names = (
 		SELECT STRING_AGG(EnemyName, ', ') AS Result FROM tblEnemy
 		INNER JOIN tblEpisodeEnemy ON tblEnemy.EnemyId = tblEpisodeEnemy.EnemyId
 		WHERE tblEpisodeEnemy.EpisodeId = @episodeId
 	);
 
-	RETURN @return_value
+	RETURN @enemy_names
 END;
 
 GO
