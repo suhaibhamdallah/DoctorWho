@@ -24,7 +24,9 @@ namespace DoctorWho.Db.Models
         [Required]
         public DateTime EpisodeDate { get; set; }
 
+        public int? AuthorId { get; set; }
         public Author Author { get; set; }
+        public int? DoctorId { get; set; }
         public Doctor Doctor { get; set; }
 
         [MaxLength(1800)]
