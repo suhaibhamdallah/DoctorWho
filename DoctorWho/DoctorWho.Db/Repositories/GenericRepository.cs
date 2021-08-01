@@ -17,6 +17,7 @@
         /// <returns></returns>
         public virtual T Create(T entity)
         {
+
             return context
                 .Add(entity)
                 .Entity;
@@ -29,6 +30,7 @@
         /// <returns></returns>
         public virtual T Delete(T entity)
         {
+
             return context
                 .Remove(entity)
                 .Entity;
@@ -41,6 +43,7 @@
         /// <returns></returns>
         public virtual T Update(T entity)
         {
+
             return context
                 .Update(entity)
                 .Entity;
