@@ -116,23 +116,7 @@ namespace DoctorWho.Db
                 new EpisodeEnemy { EpisodeEnemyId = 15, EpisodeId = 7, EnemyId = 3 }
             );
 
-            #endregion
-
-            #region Mapping functions
-
-            var getCompanionNamesMethodInfo = typeof(DoctorWhoCoreDbContext)
-               .GetMethod(nameof(GetCompanionNames), new[] { typeof(int) });
-
-            modelBuilder.HasDbFunction(getCompanionNamesMethodInfo)
-                .HasName("dbo.fnCompanions");
-
-            #endregion
-        }
-
-        // TODO: fix mapping functions
-        public string GetCompanionNames(int episodeId)
-        {
-            throw new NotImplementedException();
+            #endregion  
         }
     }
 }

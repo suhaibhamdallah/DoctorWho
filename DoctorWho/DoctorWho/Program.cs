@@ -10,7 +10,7 @@ namespace DoctorWho
         {
             using (var context = new DoctorWhoCoreDbContext())
             {
-                var companionNames = context.GetCompanionNames(1);
+                
             }
         }
     }
