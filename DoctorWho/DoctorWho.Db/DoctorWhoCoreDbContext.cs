@@ -16,6 +16,7 @@ namespace DoctorWho.Db
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            // TODO: CHANGE CONNECTION STRING
             optionsBuilder.UseSqlServer(
                 "Server = DESKTOP-EDE547A; Database = DoctorWhoCore; Trusted_Connection = True"
             );
@@ -23,6 +24,8 @@ namespace DoctorWho.Db
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            #region Seed Tables
+
             modelBuilder.Entity<Author>().HasData(
                 new Author { AuthorId = 1, AuthorName = "Suhaib Hamdallah" },
                 new Author { AuthorId = 2, AuthorName = "Anas Zakarneh" },
@@ -112,6 +115,24 @@ namespace DoctorWho.Db
                 new EpisodeEnemy { EpisodeEnemyId = 14, EpisodeId = 7, EnemyId = 2 },
                 new EpisodeEnemy { EpisodeEnemyId = 15, EpisodeId = 7, EnemyId = 3 }
             );
+
+            #endregion
+
+            #region Mapping functions
+
+            var getCompanionNamesMethodInfo = typeof(DoctorWhoCoreDbContext)
+               .GetMethod(nameof(GetCompanionNames), new[] { typeof(int) });
+
+            modelBuilder.HasDbFunction(getCompanionNamesMethodInfo)
+                .HasName("dbo.fnCompanions");
+
+            #endregion
+        }
+
+        // TODO: fix mapping functions
+        public string GetCompanionNames(int episodeId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

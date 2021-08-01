@@ -1,12 +1,17 @@
 ﻿using System;
+using DoctorWho.Db;
+using Microsoft.EntityFrameworkCore;
 
 namespace DoctorWho
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            using (var context = new DoctorWhoCoreDbContext())
+            {
+                var companionNames = context.GetCompanionNames(1);
+            }
         }
     }
 }
