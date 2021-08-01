@@ -13,6 +13,7 @@ namespace DoctorWho.Db
         public DbSet<Episode> Episodes { get; set; }
         public DbSet<EpisodeCompanion> EpisodeCompanions { get; set; }
         public DbSet<EpisodeEnemy> EpisodeEnemies { get; set; }
+        public DbSet<ViewEpisodes> ViewEpisodes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -116,7 +117,18 @@ namespace DoctorWho.Db
                 new EpisodeEnemy { EpisodeEnemyId = 15, EpisodeId = 7, EnemyId = 3 }
             );
 
-            #endregion  
+            #endregion
+
+            #region Mapping view
+
+            modelBuilder
+                .Entity<ViewEpisodes>(eb =>
+                {
+                    eb.HasNoKey();
+                    eb.ToView("viewEpisodes");
+                });
+
+            #endregion
         }
     }
 }
