@@ -2,26 +2,10 @@
 
 namespace DoctorWho.Db.Repositories
 {
-    public class EpisodeCompanionRepository
+    public class EpisodeCompanionRepository : Repository<EpisodeCompanion>
     {
-        private readonly DoctorWhoCoreDbContext _context;
-
-        public EpisodeCompanionRepository()
+        public EpisodeCompanionRepository(DoctorWhoCoreDbContext context) : base(context)
         {
-            _context = new DoctorWhoCoreDbContext();
-        }
-
-        /// <summary>
-        /// Add companion to episode
-        /// </summary>
-        /// <param name="episodeCompanion"></param>
-        /// <returns></returns>
-        public EpisodeCompanion Add(EpisodeCompanion episodeCompanion)
-        {
-
-            return _context
-                .Add(episodeCompanion)
-                .Entity;
         }
     }
 }

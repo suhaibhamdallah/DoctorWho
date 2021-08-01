@@ -1,11 +1,14 @@
-﻿namespace DoctorWho.Db.Repositories
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace DoctorWho.Db.Repositories
 {
-    public abstract class GenericRepository<T>
+    public abstract class Repository<T>
         : IRepository<T> where T : class
     {
         protected DoctorWhoCoreDbContext context;
 
-        protected GenericRepository(DoctorWhoCoreDbContext context)
+        protected Repository(DoctorWhoCoreDbContext context)
         {
             this.context = context;
         }
@@ -47,6 +50,30 @@
             return context
                 .Update(entity)
                 .Entity;
+        }
+
+        /// <summary>
+        /// Get entity by id from database table
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public virtual T FindById(int id)
+        {
+
+            return context
+                .Set<T>()
+                .Find(id);
+        }
+
+        /// <summary>
+        /// Return all the entities from database table
+        /// </summary>
+        /// <returns></returns>
+        public virtual IEnumerable<T> FindAll()
+        {
+            return context
+                .Set<T>()
+                .ToList();
         }
 
         /// <summary>
