@@ -22,10 +22,10 @@ namespace DoctorWho.Db.Tests
 
             // -- Act
             var expectedAuthorRepositoryRowsNum = authorRepository.FindAll().Count();
-            var expectedAuthorId = authorRepository.FindAll().Last().AuthorId;
+            var expectedAuthorId = authorRepository.FindAll().Last().Id;
             var expectedAuthorName = "Suhaib Hamdallah";
 
-            var actualAuthorId = actualAuthor.AuthorId;
+            var actualAuthorId = actualAuthor.Id;
             var actualAuthorName = actualAuthor.AuthorName;
 
             //-- Assert
@@ -41,7 +41,7 @@ namespace DoctorWho.Db.Tests
             AuthorRepository authorRepository = new AuthorRepository(new DoctorWhoCoreDbContext());
             Author author = new Author()
             {
-                AuthorId = 1,
+                Id = 1,
                 AuthorName = "Suhaib Zeyad"
             };
 
@@ -61,7 +61,7 @@ namespace DoctorWho.Db.Tests
         {
             // -- Arrange
             AuthorRepository authorRepository = new AuthorRepository(new DoctorWhoCoreDbContext());
-            Author obseleteAuthor = authorRepository.FindById(16);
+            Author obseleteAuthor = authorRepository.FindById(14);
 
             authorRepository.Delete(obseleteAuthor);
             var expectedAuthorRepositoryRowsNum = authorRepository.FindAll().Count() - 1;
@@ -80,14 +80,14 @@ namespace DoctorWho.Db.Tests
             // -- Act
             Author expectedAuthor = new Author()
             {
-                AuthorId = 1,
+                Id = 1,
                 AuthorName = "Suhaib Zeyad"
             };
 
             var actualAuthor = authorRepository.FindById(1);
 
             //-- Assert
-            Assert.Equal(expectedAuthor.AuthorId, actualAuthor.AuthorId);
+            Assert.Equal(expectedAuthor.Id, actualAuthor.Id);
             Assert.Equal(expectedAuthor.AuthorName, actualAuthor.AuthorName);
         }
 

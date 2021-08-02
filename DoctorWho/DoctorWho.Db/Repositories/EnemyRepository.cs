@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace DoctorWho.Db.Repositories
 {
-    public class EnemyRepository : Repository<Enemy>
+    public class EnemyRepository : Repository<Enemy, int>
     {
         public EnemyRepository(DoctorWhoCoreDbContext context) : base(context)
         {

@@ -2,13 +2,13 @@
 
 namespace DoctorWho.Db.Repositories
 {
-    public interface IRepository<T>
+    public interface IRepository<TEntity, TId>
     {
-        T Create(T entity);
-        T Update(T entity);
-        T Delete(T entity);
-        T FindById(int id);
-        IEnumerable<T> FindAll();
+        TEntity Create(TEntity entity);
+        TEntity Update(TEntity entity);
+        TEntity Delete(TEntity entity);
+        TEntity FindById(TId id);
+        IEnumerable<TEntity> FindAll();
         void SaveChanges();
     }
 }

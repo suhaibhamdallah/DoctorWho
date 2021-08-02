@@ -3,8 +3,8 @@ using System.Linq;
 
 namespace DoctorWho.Db.Repositories
 {
-    public abstract class Repository<T>
-        : IRepository<T> where T : class
+    public abstract class Repository<T, TId>
+        : IRepository<T, TId> where T : class
     {
         protected DoctorWhoCoreDbContext context;
 
@@ -57,7 +57,7 @@ namespace DoctorWho.Db.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public virtual T FindById(int id)
+        public virtual T FindById(TId id)
         {
 
             return context

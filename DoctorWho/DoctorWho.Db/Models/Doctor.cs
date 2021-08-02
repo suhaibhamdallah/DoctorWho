@@ -3,9 +3,9 @@ using System;
 
 namespace DoctorWho.Db.Models
 {
-    public class Doctor
+    public class Doctor : IModel<int>
     {
-        public int DoctorId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public int DoctorNumber { get; set; }

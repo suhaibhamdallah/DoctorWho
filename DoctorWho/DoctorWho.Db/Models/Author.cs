@@ -2,9 +2,9 @@
 
 namespace DoctorWho.Db.Models
 {
-    public class Author
+    public class Author : IModel<int>
     {
-        public int AuthorId { get; set; }
+        public int Id { get; set; }
 
         [MaxLength(50)]
         [Required]

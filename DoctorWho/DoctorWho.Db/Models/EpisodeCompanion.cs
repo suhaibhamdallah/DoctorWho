@@ -1,8 +1,8 @@
 ﻿namespace DoctorWho.Db.Models
 {
-    public class EpisodeCompanion
+    public class EpisodeCompanion : IModel<int>
     {
-        public int EpisodeCompanionId { get; set; }
+        public int Id { get; set; }
         public int EpisodeId { get; set; }
         public Episode Episode { get; set; }
         public int CompanionId { get; set; }

@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DoctorWho.Db.Models
 {
-    public class Episode
+    public class Episode : IModel<int>
     {
-        public int EpisodeId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public int SeriesNumber { get; set; }

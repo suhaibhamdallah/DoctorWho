@@ -2,9 +2,9 @@
 
 namespace DoctorWho.Db.Models
 {
-    public class Companion
+    public class Companion : IModel<int>
     {
-        public int CompanionId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(50)]
