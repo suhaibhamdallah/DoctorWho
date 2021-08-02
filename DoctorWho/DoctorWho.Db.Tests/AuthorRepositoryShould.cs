@@ -61,7 +61,7 @@ namespace DoctorWho.Db.Tests
         {
             // -- Arrange
             AuthorRepository authorRepository = new AuthorRepository(new DoctorWhoCoreDbContext());
-            Author obseleteAuthor = authorRepository.FindById(10);
+            Author obseleteAuthor = authorRepository.FindById(16);
 
             authorRepository.Delete(obseleteAuthor);
             var expectedAuthorRepositoryRowsNum = authorRepository.FindAll().Count() - 1;

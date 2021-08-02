@@ -14,33 +14,24 @@ namespace DoctorWho
         {
             using (var context = new DoctorWhoCoreDbContext())
             {
-               var viewResult = context.ViewEpisodes.ToList();
+                var viewResult = context.ViewEpisodes.ToList();
+
+                var sqlCommander = new SqlCommander();
 
                 #region Exec procedure
 
-                var dataSet = new DataSet();
-                var adapter = new SqlDataAdapter();
+                var storedProcedureResult = sqlCommander.ExecuteSqlCommand("EXECUTE spSummariseEpisodes");
 
-                var command = new SqlCommand("EXECUTE spSummariseEpisodes", new SqlConnection("Server = DESKTOP-EDE547A; Database = DoctorWhoCore; Trusted_Connection = True;Integrated Security=True;MultipleActiveResultSets=True"));
-
-                adapter.SelectCommand = command;
-
-                adapter.Fill(dataSet);
-
-                var firstTable = dataSet.Tables[0].ToList<Table1>();
-                var secondTable = dataSet.Tables[1].ToList<Table2>();
+                var firstTable = storedProcedureResult.Tables[0].ToList<Table1>();
+                var secondTable = storedProcedureResult.Tables[1].ToList<Table2>();
 
                 #endregion
 
                 #region Func exec
 
-                var dataSet2 = new DataSet();
-                var adapter2 = new SqlDataAdapter();
-                var command2 = new SqlCommand("SELECT dbo.fnEnemies(1) as result", new SqlConnection("Server = DESKTOP-EDE547A; Database = DoctorWhoCore; Trusted_Connection = True;Integrated Security=True;MultipleActiveResultSets=True"));
-                adapter2.SelectCommand = command2;
-                adapter2.Fill(dataSet2);
+                var scalarFunctionResult = sqlCommander.ExecuteSqlCommand("SELECT dbo.fnEnemies(1) as result");
 
-                var funcResult = dataSet2.Tables[0].ToList<FuncResult>();
+                var funcResult = scalarFunctionResult.Tables[0].ToList<FuncResult>();
 
                 #endregion
             }
