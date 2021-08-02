@@ -15,6 +15,16 @@ namespace DoctorWho.Db
         public DbSet<EpisodeEnemy> EpisodeEnemies { get; set; }
         public DbSet<ViewEpisodes> ViewEpisodes { get; set; }
 
+        public DoctorWhoCoreDbContext()
+        {
+
+        }
+
+        public DoctorWhoCoreDbContext(DbContextOptions<DoctorWhoCoreDbContext> options) : base(options)
+        {
+
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // TODO: CHANGE CONNECTION STRING
