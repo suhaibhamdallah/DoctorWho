@@ -13,7 +13,7 @@ namespace DoctorWho.Db
         public DbSet<Episode> Episodes { get; set; }
         public DbSet<EpisodeCompanion> EpisodeCompanions { get; set; }
         public DbSet<EpisodeEnemy> EpisodeEnemies { get; set; }
-        public DbSet<ViewEpisodes> ViewEpisodes { get; set; }
+        public DbSet<EpisodesView> ViewEpisodes { get; set; }
 
         public DoctorWhoCoreDbContext()
         {
@@ -132,7 +132,7 @@ namespace DoctorWho.Db
             #region Mapping view
 
             modelBuilder
-                .Entity<ViewEpisodes>(eb =>
+                .Entity<EpisodesView>(eb =>
                 {
                     eb.HasNoKey();
                     eb.ToView("viewEpisodes");

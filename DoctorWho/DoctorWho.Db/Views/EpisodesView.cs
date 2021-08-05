@@ -3,7 +3,7 @@
 namespace DoctorWho.Db.Models
 {
     [Keyless]
-    public class ViewEpisodes
+    public class EpisodesView
     {
         public string AuthorName { get; set; }
         public string DoctorName { get; set; }
