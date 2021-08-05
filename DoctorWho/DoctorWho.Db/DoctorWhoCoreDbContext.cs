@@ -134,7 +134,6 @@ namespace DoctorWho.Db
             modelBuilder
                 .Entity<EpisodesView>(eb =>
                 {
-                    eb.HasNoKey();
                     eb.ToView("viewEpisodes");
                 });
 

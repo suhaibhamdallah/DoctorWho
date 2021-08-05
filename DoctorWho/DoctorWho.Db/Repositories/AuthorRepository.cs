@@ -2,7 +2,7 @@
 
 namespace DoctorWho.Db.Repositories
 {
-    public class AuthorRepository : Repository<Author, int>
+    public class AuthorRepository : Repository<Author, Author, int>
     {
         public AuthorRepository(DoctorWhoCoreDbContext context) : base(context)
         {

@@ -13,13 +13,14 @@ namespace DoctorWho.Db.Migrations
             // 4. Enemies
             migrationBuilder.Sql(
                 @"CREATE OR ALTER VIEW viewEpisodes AS
-                    SELECT  Doctors.DoctorName,
+                    SELECT  Episodes.*,
+                            Doctors.DoctorName,
 		                    Authors.AuthorName,
-		                    dbo.fnCompanions(Episodes.EpisodeId) as Companions,
-		                    dbo.fnEnemies(Episodes.EpisodeId) as Enemies
+		                    dbo.fnCompanions(Episodes.Id) as Companions,
+		                    dbo.fnEnemies(Episodes.Id) as Enemies
                     FROM Episodes
-                    LEFT JOIN Authors ON Authors.AuthorId = Episodes.AuthorId
-                    LEFT JOIN Doctors ON Doctors.DoctorId = Episodes.DoctorId;"
+                    LEFT JOIN Authors ON Authors.Id = Episodes.Id
+                    LEFT JOIN Doctors ON Doctors.Id = Episodes.Id;"
             );
         }
 

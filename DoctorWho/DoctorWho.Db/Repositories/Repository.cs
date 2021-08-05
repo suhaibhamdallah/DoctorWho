@@ -3,8 +3,9 @@ using System.Linq;
 
 namespace DoctorWho.Db.Repositories
 {
-    public abstract class Repository<T, TId>
-        : IRepository<T, TId> where T : class
+    public abstract class Repository<T, VEntity, TId>
+        : IRepository<T, VEntity, TId> where T : class
+        where VEntity : class
     {
         protected DoctorWhoCoreDbContext context;
 
@@ -57,11 +58,11 @@ namespace DoctorWho.Db.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public virtual T FindById(TId id)
+        public virtual VEntity FindById(TId id)
         {
 
             return context
-                .Set<T>()
+                .Set<VEntity>()
                 .Find(id);
         }
 
@@ -69,10 +70,10 @@ namespace DoctorWho.Db.Repositories
         /// Return all the entities from database table
         /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<T> FindAll()
+        public virtual IEnumerable<VEntity> FindAll()
         {
             return context
-                .Set<T>()
+                .Set<VEntity>()
                 .ToList();
         }
 

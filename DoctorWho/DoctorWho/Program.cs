@@ -1,4 +1,5 @@
 ﻿using DoctorWho.Db;
+using DoctorWho.Db.Repositories;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -14,26 +15,30 @@ namespace DoctorWho
         {
             using (var context = new DoctorWhoCoreDbContext())
             {
-                var viewResult = context.ViewEpisodes.ToList();
+                EpisodeRepository episodeRepository = new EpisodeRepository(context);
+                var episodes = episodeRepository.FindAll().ToList();
 
-                var sqlCommander = new SqlCommander();
+                //var viewResult = context.ViewEpisodes.ToList();
 
-                #region Exec procedure
+                //var sqlCommander = new SqlCommander();
 
-                var storedProcedureResult = sqlCommander.ExecuteSqlCommand("EXECUTE spSummariseEpisodes");
+                //#region Exec procedure
 
-                var firstTable = storedProcedureResult.Tables[0].ToList<Table1>();
-                var secondTable = storedProcedureResult.Tables[1].ToList<Table2>();
+                //var storedProcedureResult = sqlCommander.ExecuteSqlCommand("EXECUTE spSummariseEpisodes");
 
-                #endregion
+                //var firstTable = storedProcedureResult.Tables[0].ToList<Table1>();
+                //var secondTable = storedProcedureResult.Tables[1].ToList<Table2>();
 
-                #region Func exec
+                //#endregion
 
-                var scalarFunctionResult = sqlCommander.ExecuteSqlCommand("SELECT dbo.fnEnemies(1) as result");
+                //#region Func exec
 
-                var funcResult = scalarFunctionResult.Tables[0].ToList<FuncResult>();
+                //var scalarFunctionResult = sqlCommander.ExecuteSqlCommand("SELECT dbo.fnEnemies(1) as result");
 
-                #endregion
+                //var funcResult = scalarFunctionResult.Tables[0].ToList<FuncResult>();
+
+                //#endregion
+
             }
         }
     }
