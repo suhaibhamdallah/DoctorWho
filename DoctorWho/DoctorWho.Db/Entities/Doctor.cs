@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System;
 
-namespace DoctorWho.Db.Models
+namespace DoctorWho.Db.Entities
 {
     public class Doctor : IModel<int>
     {

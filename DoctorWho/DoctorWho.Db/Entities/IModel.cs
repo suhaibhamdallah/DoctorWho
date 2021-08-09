@@ -1,4 +1,4 @@
-﻿namespace DoctorWho.Db.Models
+﻿namespace DoctorWho.Db.Entities
 {
     public interface IModel<TId>
     {

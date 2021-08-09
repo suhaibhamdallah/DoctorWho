@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DoctorWho.Db.Models
+namespace DoctorWho.Db.Entities
 {
     public class Author : IModel<int>
     {

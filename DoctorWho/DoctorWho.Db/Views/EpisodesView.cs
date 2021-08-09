@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace DoctorWho.Db.Models
+namespace DoctorWho.Db.Entities
 {
     public class EpisodesView
     {
