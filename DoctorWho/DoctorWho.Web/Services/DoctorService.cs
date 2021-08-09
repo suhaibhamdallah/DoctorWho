@@ -20,7 +20,7 @@ namespace DoctorWho.Web.Services
                 throw new ArgumentNullException(nameof(mapper));
         }
 
-        public IEnumerable<DoctorDto> GetAll()
+        public IEnumerable<DoctorDto> GetDoctors()
         {
             var doctorsFromRepo = _doctorRepository.FindAll();
 

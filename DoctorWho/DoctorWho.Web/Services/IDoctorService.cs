@@ -5,6 +5,6 @@ namespace DoctorWho.Web.Services
 {
     public interface IDoctorService
     {
-        IEnumerable<DoctorDto> GetAll();
+        IEnumerable<DoctorDto> GetDoctors();
     }
 }

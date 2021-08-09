@@ -18,10 +18,10 @@ namespace DoctorWho.Web.Controllers
                 throw new ArgumentNullException(nameof(doctorService));
         }
 
-        [HttpGet]
+        [HttpGet(Name = "GetDoctors")]
         public ActionResult<IEnumerable<DoctorDto>> GetDoctors()
         {
-            var doctors = _doctorService.GetAll();
+            var doctors = _doctorService.GetDoctors();
 
             return Ok(doctors);
         }
