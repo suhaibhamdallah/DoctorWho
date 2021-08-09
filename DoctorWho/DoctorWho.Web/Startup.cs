@@ -34,7 +34,7 @@ namespace DoctorWho.Web
 
             services.AddScoped<IRepository<Doctor, Doctor, int>, DoctorRepository>();
 
-            services.AddScoped<IService<DoctorDto>, DoctorService>();
+            services.AddScoped<IDoctorService, DoctorService>();
 
             services.AddDbContext<DoctorWhoCoreDbContext>();
         }

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace DoctorWho.Web.Services
 {
-    public class DoctorService : IService<DoctorDto>
+    public class DoctorService : IDoctorService
     {
         private readonly IRepository<Doctor, Doctor, int> _doctorRepository;
         private readonly IMapper _mapper;

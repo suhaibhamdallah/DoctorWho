@@ -10,9 +10,9 @@ namespace DoctorWho.Web.Controllers
     [Route("api/doctors")]
     public class DoctorsController : ControllerBase
     {
-        private readonly IService<DoctorDto> _doctorService;
+        private readonly IDoctorService _doctorService;
 
-        public DoctorsController(IService<DoctorDto> doctorService)
+        public DoctorsController(IDoctorService doctorService)
         {
             _doctorService = doctorService ??
                 throw new ArgumentNullException(nameof(doctorService));
