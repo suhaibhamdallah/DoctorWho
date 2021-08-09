@@ -1,4 +1,4 @@
-using DoctorWho.Db.Entities;
+using DoctorWho.Db.Models;
 using DoctorWho.Db.Repositories;
 using System.Linq;
 using Xunit;

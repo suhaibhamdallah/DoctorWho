@@ -1,6 +1,8 @@
 using DoctorWho.Db;
-using DoctorWho.Db.Entities;
+using DoctorWho.Db.Models;
 using DoctorWho.Db.Repositories;
+using DoctorWho.Web.Models;
+using DoctorWho.Web.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -31,6 +33,8 @@ namespace DoctorWho.Web
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IRepository<Doctor, Doctor, int>, DoctorRepository>();
+
+            services.AddScoped<IService<DoctorDto>, DoctorService>();
 
             services.AddDbContext<DoctorWhoCoreDbContext>();
         }

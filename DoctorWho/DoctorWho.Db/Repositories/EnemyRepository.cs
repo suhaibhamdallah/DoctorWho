@@ -1,4 +1,4 @@
-﻿using DoctorWho.Db.Entities;
+﻿using DoctorWho.Db.Models;
 using System.Linq;
 
 namespace DoctorWho.Db.Repositories

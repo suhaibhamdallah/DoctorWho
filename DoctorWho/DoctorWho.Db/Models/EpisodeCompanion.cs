@@ -1,4 +1,4 @@
-﻿namespace DoctorWho.Db.Entities
+﻿namespace DoctorWho.Db.Models
 {
     public class EpisodeCompanion : IModel<int>
     {

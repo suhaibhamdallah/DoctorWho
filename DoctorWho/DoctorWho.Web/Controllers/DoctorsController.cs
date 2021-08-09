@@ -1,7 +1,5 @@
-﻿using AutoMapper;
-using DoctorWho.Db.Entities;
-using DoctorWho.Db.Repositories;
-using DoctorWho.Web.Models;
+﻿using DoctorWho.Web.Models;
+using DoctorWho.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,23 +10,20 @@ namespace DoctorWho.Web.Controllers
     [Route("api/doctors")]
     public class DoctorsController : ControllerBase
     {
-        private readonly IRepository<Doctor, Doctor, int> _doctorRepository;
-        private readonly IMapper _mapper;
+        private readonly IService<DoctorDto> _doctorService;
 
-        public DoctorsController(IRepository<Doctor, Doctor, int> doctorRepository, IMapper mapper)
+        public DoctorsController(IService<DoctorDto> doctorService)
         {
-            _doctorRepository = doctorRepository ??
-                throw new ArgumentNullException(nameof(doctorRepository));
-            _mapper = mapper ??
-                throw new ArgumentNullException(nameof(mapper));
+            _doctorService = doctorService ??
+                throw new ArgumentNullException(nameof(doctorService));
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<DoctorDto>> GetDoctors()
         {
-            var doctorsFromRepo = _doctorRepository.FindAll();
+            var doctors = _doctorService.GetAll();
 
-            return Ok(_mapper.Map<IEnumerable<DoctorDto>>(doctorsFromRepo));
+            return Ok(doctors);
         }
     }
 }

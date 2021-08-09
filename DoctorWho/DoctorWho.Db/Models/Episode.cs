@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace DoctorWho.Db.Entities
+namespace DoctorWho.Db.Models
 {
     public class Episode : IModel<int>
     {

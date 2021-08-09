@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using DoctorWho.Web.Models;
-using DoctorWho.Db.Entities;
+using DoctorWho.Db.Models;
 
 namespace DoctorWho.Web.Profiles
 {
