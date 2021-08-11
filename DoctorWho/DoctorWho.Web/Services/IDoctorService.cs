@@ -13,5 +13,6 @@ namespace DoctorWho.Web.Services
         public DoctorDto UpdateDoctor(DoctorForManipulationDto doctor);
         public Task<DoctorDto> UpsertDoctor(DoctorForManipulationDto doctor);
         public bool DoctorExist(int? doctorId);
+        public Task<DoctorDto> DeleteDoctor(int doctorId);
     }
 }

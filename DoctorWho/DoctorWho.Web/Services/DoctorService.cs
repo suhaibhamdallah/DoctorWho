@@ -105,5 +105,21 @@ namespace DoctorWho.Web.Services
 
             return true;
         }
+
+        /// <summary>
+        /// Delete doctor from database
+        /// </summary>
+        /// <param name="doctorId"></param>
+        /// <returns></returns>
+        public async Task<DoctorDto> DeleteDoctor(int doctorId)
+        {
+            var doctorToDeleteFromRepo = await _doctorRepository.FindById(doctorId);
+
+            var doctorDeleted = _doctorRepository.Delete(doctorToDeleteFromRepo);
+
+            var doctorToReturn = _mapper.Map<DoctorDto>(doctorDeleted);
+
+            return doctorToReturn;
+        }
     }
 }

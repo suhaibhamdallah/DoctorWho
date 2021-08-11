@@ -72,5 +72,23 @@ namespace DoctorWho.Web.Controllers
 
             return Ok(result);
         }
+
+        /// <summary>
+        /// Delete doctor by id
+        /// </summary>
+        /// <param name="doctorId"></param>
+        /// <returns></returns>
+        [HttpDelete("{doctorId}", Name = "Delete Doctor")]
+        public async Task<ActionResult<DoctorDto>> DeleteDoctor([FromRoute] int doctorId)
+        {
+            if (!_doctorService.DoctorExist(doctorId))
+            {
+                return Problem(statusCode: 400, title: "Invalid Id");
+            }
+
+            var doctorDeleted = await _doctorService.DeleteDoctor(doctorId);
+
+            return Ok(doctorDeleted);
+        }
     }
 }
