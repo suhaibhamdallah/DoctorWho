@@ -37,7 +37,11 @@ namespace DoctorWho.Web
 
             services.AddTransient<IRepository<Doctor, Doctor, int>, DoctorRepository>();
 
+            services.AddTransient<IRepository<Episode, EpisodesView, int>, EpisodeRepository>();
+
             services.AddTransient<IDoctorService, DoctorService>();
+
+            services.AddTransient<IEpisodeService, EpisodeService>();
 
             services.AddDbContext<DoctorWhoCoreDbContext>(options => options.UseQueryTrackingBehavior(Microsoft.EntityFrameworkCore.QueryTrackingBehavior.NoTracking));
 

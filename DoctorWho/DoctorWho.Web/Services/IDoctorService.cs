@@ -1,5 +1,4 @@
-﻿using DoctorWho.Db.Models;
-using DoctorWho.Web.Models;
+﻿using DoctorWho.Web.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
