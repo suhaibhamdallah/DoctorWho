@@ -7,5 +7,6 @@ namespace DoctorWho.Web.Services
     public interface IEpisodeService
     {
         public Task<IEnumerable<EpisodeDto>> GetEpisodes();
+        public Task<EpisodeDto> CreateEpisode(EpisodeForCreationDto episode);
     }
 }

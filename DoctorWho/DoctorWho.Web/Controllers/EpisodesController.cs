@@ -30,5 +30,23 @@ namespace DoctorWho.Web.Controllers
 
             return Ok(episodesFromService);
         }
+
+        /// <summary>
+        /// Create new episode
+        /// </summary>
+        /// <returns>The new episode id</returns>
+        [HttpPost(Name = "CreateEpisode")]
+        public async Task<IActionResult> CreateEpisode([FromBody] EpisodeForCreationDto episode)
+        {
+            if (!ModelState.IsValid)
+            {
+
+                return BadRequest();
+            }
+
+            var addedEpisode = await _episodeService.CreateEpisode(episode);
+
+            return Created("", new { Id = addedEpisode.Id });
+        }
     }
 }
