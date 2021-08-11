@@ -63,11 +63,6 @@ namespace DoctorWho.Web.Controllers
                 return BadRequest();
             }
 
-            if (doctor.Id != null && !_doctorService.DoctorExist(doctor.Id))
-            {
-                return Problem(statusCode: 400, title: "Invalid Id");
-            }
-
             var result = await _doctorService.UpsertDoctor(doctor);
 
             return Ok(result);

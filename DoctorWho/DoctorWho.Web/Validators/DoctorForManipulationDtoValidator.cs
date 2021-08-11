@@ -1,12 +1,24 @@
 ﻿using DoctorWho.Web.Models;
+using DoctorWho.Web.Services;
 using FluentValidation;
+using System;
+using System.Threading.Tasks;
 
 namespace DoctorWho.Web.Validators
 {
     public class DoctorForManipulationDtoValidator : AbstractValidator<DoctorForManipulationDto>
     {
-        public DoctorForManipulationDtoValidator()
+        private readonly IDoctorService _doctorService;
+
+        public DoctorForManipulationDtoValidator(IDoctorService doctorService)
         {
+            _doctorService = doctorService ??
+                throw new ArgumentNullException(nameof(doctorService));
+
+            RuleFor(doctor => doctor.Id)
+                .MustAsync((doctorId, token) => CheckDoctorId(doctorId))
+                .WithMessage("Invalid Id");
+
             RuleFor(doctor => doctor.DoctorName)
                 .NotEmpty();
 
@@ -19,6 +31,12 @@ namespace DoctorWho.Web.Validators
 
             RuleFor(doctor => doctor.LastEpisodeDate)
                 .GreaterThanOrEqualTo(doctor => doctor.FirstEpisodeDate);
+        }
+
+        private async Task<bool> CheckDoctorId(int? doctorId)
+        {
+
+            return !(doctorId != null && !_doctorService.DoctorExist(doctorId));
         }
     }
 }

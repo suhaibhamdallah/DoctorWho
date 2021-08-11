@@ -63,7 +63,6 @@ namespace DoctorWho.Db.Tests
 
             authorRepository.Delete(obseleteAuthor);
             var expectedAuthorRepositoryRowsNum = authorRepository.FindAll().Result.ToList().Count() - 1;
-            //authorRepository.SaveChanges();
 
             //-- Assert
             Assert.Equal(expectedAuthorRepositoryRowsNum, authorRepository.FindAll().Result.ToList().Count());

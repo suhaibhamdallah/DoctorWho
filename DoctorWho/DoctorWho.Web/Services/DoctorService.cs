@@ -67,9 +67,9 @@ namespace DoctorWho.Web.Services
         {
             var doctorToUpdate = _mapper.Map<Doctor>(doctor);
 
-            var doctorUpdated = _doctorRepository.Update(doctorToUpdate);
+            var updatedDoctor = _doctorRepository.Update(doctorToUpdate);
 
-            return _mapper.Map<DoctorDto>(doctorUpdated);
+            return _mapper.Map<DoctorDto>(updatedDoctor);
         }
 
         /// <summary>
@@ -86,9 +86,9 @@ namespace DoctorWho.Web.Services
                 return doctorAdded;
             }
 
-            var doctorUpdated = UpdateDoctor(doctor);
+            var updatedDoctor = UpdateDoctor(doctor);
 
-            return doctorUpdated;
+            return updatedDoctor;
         }
 
         /// <summary>
@@ -98,12 +98,7 @@ namespace DoctorWho.Web.Services
         /// <returns></returns>
         public bool DoctorExist(int? doctorId)
         {
-            if (GetDoctor((int)doctorId).Result is null)
-            {
-                return false;
-            }
-
-            return true;
+            return !(GetDoctor((int)doctorId).Result is null);
         }
 
         /// <summary>
