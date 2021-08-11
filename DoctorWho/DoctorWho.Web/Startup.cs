@@ -40,9 +40,13 @@ namespace DoctorWho.Web
 
             services.AddTransient<IRepository<Episode, EpisodesView, int>, EpisodeRepository>();
 
+            services.AddTransient<IRepository<Author, Author, int>, AuthorRepository>();
+
             services.AddTransient<IDoctorService, DoctorService>();
 
             services.AddTransient<IEpisodeService, EpisodeService>();
+
+            services.AddTransient<IAuthorService, AuthorService>();
 
             services.AddDbContext<DoctorWhoCoreDbContext>(options => 
             {
