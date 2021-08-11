@@ -3,6 +3,9 @@ using DoctorWho.Db.Models;
 using DoctorWho.Db.Repositories;
 using DoctorWho.Web.Models;
 using DoctorWho.Web.Services;
+using DoctorWho.Web.Validators;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -28,15 +31,19 @@ namespace DoctorWho.Web
             services.AddControllers(setupAction =>
             {
                 setupAction.ReturnHttpNotAcceptable = true;
-            });
+            }).AddNewtonsoftJson(); ;
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddScoped<IRepository<Doctor, Doctor, int>, DoctorRepository>();
+            services.AddTransient<IRepository<Doctor, Doctor, int>, DoctorRepository>();
 
-            services.AddScoped<IDoctorService, DoctorService>();
+            services.AddTransient<IDoctorService, DoctorService>();
 
-            services.AddDbContext<DoctorWhoCoreDbContext>();
+            services.AddDbContext<DoctorWhoCoreDbContext>(options => options.UseQueryTrackingBehavior(Microsoft.EntityFrameworkCore.QueryTrackingBehavior.NoTracking));
+
+            services.AddFluentValidation();
+
+            services.AddTransient<IValidator<DoctorForManipulationDto>, DoctorForManipulationDtoValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

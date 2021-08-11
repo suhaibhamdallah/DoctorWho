@@ -17,19 +17,18 @@ namespace DoctorWho.Db.Tests
                 AuthorName = "Suhaib Hamdallah"
             };
 
-            var actualAuthor = authorRepository.Create(author);
-            authorRepository.SaveChanges();
+            var actualAuthor = authorRepository.Create(author).Result;
 
             // -- Act
-            var expectedAuthorRepositoryRowsNum = authorRepository.FindAll().Count();
-            var expectedAuthorId = authorRepository.FindAll().Last().Id;
+            var expectedAuthorRepositoryRowsNum = authorRepository.FindAll().Result.ToList().Count;
+            var expectedAuthorId = authorRepository.FindAll().Result.Last().Id; ;
             var expectedAuthorName = "Suhaib Hamdallah";
 
             var actualAuthorId = actualAuthor.Id;
             var actualAuthorName = actualAuthor.AuthorName;
 
             //-- Assert
-            Assert.Equal(expectedAuthorRepositoryRowsNum, authorRepository.FindAll().Count());
+            Assert.Equal(expectedAuthorRepositoryRowsNum, authorRepository.FindAll().Result.ToList().Count());
             Assert.Equal(expectedAuthorId, actualAuthorId);
             Assert.Equal(expectedAuthorName, actualAuthorName);
         }
@@ -46,7 +45,6 @@ namespace DoctorWho.Db.Tests
             };
 
             var actualAuthor = authorRepository.Update(author);
-            authorRepository.SaveChanges();
 
             // -- Act
             var expectedAuthorName = "Suhaib Zeyad";
@@ -61,14 +59,14 @@ namespace DoctorWho.Db.Tests
         {
             // -- Arrange
             AuthorRepository authorRepository = new AuthorRepository(new DoctorWhoCoreDbContext());
-            Author obseleteAuthor = authorRepository.FindById(14);
+            Author obseleteAuthor = authorRepository.FindById(24).Result;
 
             authorRepository.Delete(obseleteAuthor);
-            var expectedAuthorRepositoryRowsNum = authorRepository.FindAll().Count() - 1;
-            authorRepository.SaveChanges();
+            var expectedAuthorRepositoryRowsNum = authorRepository.FindAll().Result.ToList().Count() - 1;
+            //authorRepository.SaveChanges();
 
             //-- Assert
-            Assert.Equal(expectedAuthorRepositoryRowsNum, authorRepository.FindAll().Count());
+            Assert.Equal(expectedAuthorRepositoryRowsNum, authorRepository.FindAll().Result.ToList().Count());
         }
 
         [Fact]
@@ -84,7 +82,7 @@ namespace DoctorWho.Db.Tests
                 AuthorName = "Suhaib Zeyad"
             };
 
-            var actualAuthor = authorRepository.FindById(1);
+            var actualAuthor = authorRepository.FindById(1).Result;
 
             //-- Assert
             Assert.Equal(expectedAuthor.Id, actualAuthor.Id);
@@ -98,8 +96,8 @@ namespace DoctorWho.Db.Tests
             AuthorRepository authorRepository = new AuthorRepository(new DoctorWhoCoreDbContext());
 
             // -- Act
-            var expectedAuthorRepositoryRowsNum = authorRepository.FindAll().Count();
-            var actualAuthorRepositoryRowsNum = authorRepository.FindAll().Count();
+            var expectedAuthorRepositoryRowsNum = authorRepository.FindAll().Result.ToList().Count();
+            var actualAuthorRepositoryRowsNum = authorRepository.FindAll().Result.ToList().Count();
 
             //-- Assert
             Assert.Equal(expectedAuthorRepositoryRowsNum, actualAuthorRepositoryRowsNum);

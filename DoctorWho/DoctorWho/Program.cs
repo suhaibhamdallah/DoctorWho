@@ -16,7 +16,7 @@ namespace DoctorWho
             using (var context = new DoctorWhoCoreDbContext())
             {
                 EpisodeRepository episodeRepository = new EpisodeRepository(context);
-                var episodes = episodeRepository.FindAll().ToList();
+               // var episodes = episodeRepository.FindAll().ToList();
 
                 //var viewResult = context.ViewEpisodes.ToList();
 

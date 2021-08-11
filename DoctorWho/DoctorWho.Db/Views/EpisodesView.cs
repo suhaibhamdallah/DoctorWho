@@ -3,7 +3,7 @@ using System;
 
 namespace DoctorWho.Db.Models
 {
-    public class EpisodesView
+    public class EpisodesView : IModel<int>
     {
         public int Id { get; set; }
         public int SeriesNumber { get; set; }
