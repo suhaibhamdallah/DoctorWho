@@ -25,10 +25,9 @@ namespace DoctorWho.Web.Services
         /// </summary>
         /// <param name="author"></param>
         /// <returns></returns>
-        public AuthorDto UpdateAuthor(int authorId, AuthorForUpdateDto author)
+        public AuthorDto UpdateAuthor(AuthorDto author)
         {
             var authorToUpdate = _mapper.Map<Author>(author);
-            authorToUpdate.Id = authorId;
 
             var updatedAuthor = _authorRepository.Update(authorToUpdate);
 

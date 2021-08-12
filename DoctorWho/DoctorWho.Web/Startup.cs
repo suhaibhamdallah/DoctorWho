@@ -59,6 +59,8 @@ namespace DoctorWho.Web
             services.AddTransient<IValidator<DoctorForManipulationDto>, DoctorForManipulationDtoValidator>();
 
             services.AddTransient<IValidator<EpisodeForCreationDto>, EpisodeForCreationDtoValidator>();
+
+            services.AddTransient<IValidator<AuthorDto>, AuthorDtoValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

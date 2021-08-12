@@ -23,17 +23,10 @@ namespace DoctorWho.Web.Controllers
         /// <param name="authorId"></param>
         /// <param name="author"></param>
         /// <returns></returns>
-        [HttpPut("{authorId}", Name = "PutAuthor")]
-        public ActionResult<AuthorDto> UpdateAuthor([FromRoute] int authorId,
-            [FromBody] AuthorForUpdateDto author)
+        [HttpPut(Name = "PutAuthor")]
+        public ActionResult<AuthorDto> UpdateAuthor([FromBody] AuthorDto author)
         {
-            if (!_authorService.IsAuthorExist(authorId))
-            {
-
-                return BadRequest();
-            }
-
-            var updatedAuthor = _authorService.UpdateAuthor(authorId, author);
+            var updatedAuthor = _authorService.UpdateAuthor(author);
 
             return Ok(updatedAuthor);
         }

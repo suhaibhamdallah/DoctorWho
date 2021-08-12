@@ -5,7 +5,7 @@ namespace DoctorWho.Web.Services
 {
     public interface IAuthorService
     {
-        public AuthorDto UpdateAuthor(int authorId, AuthorForUpdateDto author);
+        public AuthorDto UpdateAuthor(AuthorDto author);
         public Task<AuthorDto> GetAuthor(int authorId);
         public bool IsAuthorExist(int authorId);
     }
