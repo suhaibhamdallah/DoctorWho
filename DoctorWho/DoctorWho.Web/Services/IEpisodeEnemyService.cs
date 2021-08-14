@@ -5,6 +5,6 @@ namespace DoctorWho.Web.Services
 {
     public interface IEpisodeEnemyService
     {
-        public Task<EpisodeEnemyDto> CreateEpisodeEnemy(EpisodeEnemyForCreationDto episode);
+        public Task<EpisodeEnemyDto> CreateEpisodeEnemy(EpisodeEnemyForCreationDto episodeEnemy);
     }
 }

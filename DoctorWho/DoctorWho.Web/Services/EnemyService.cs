@@ -21,6 +21,11 @@ namespace DoctorWho.Web.Services
                 throw new ArgumentNullException(nameof(mapper));
         }
 
+        /// <summary>
+        /// Get enemy by id
+        /// </summary>
+        /// <param name="enemyId"></param>
+        /// <returns></returns>
         public async Task<EnemytDto> GetEnemy(int enemyId)
         {
             var enemyFromRepo = await _enemyRepository.FindById(enemyId);
@@ -30,6 +35,11 @@ namespace DoctorWho.Web.Services
             return enemyToReturn;
         }
 
+        /// <summary>
+        /// Check if enemy exist 
+        /// </summary>
+        /// <param name="enemyId"></param>
+        /// <returns></returns>
         public bool IsEnemyExist(int enemyId)
         {
             return !(GetEnemy(enemyId).Result is null);

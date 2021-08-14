@@ -13,14 +13,20 @@ namespace DoctorWho.Web.Controllers
     {
         private readonly IEpisodeService _episodeService;
         private readonly IEpisodeEnemyService _episodeEnemyService;
+        private readonly IEpisodeCompanionService _episodeCompanionService;
 
-        public EpisodesController(IEpisodeService episodeService, IEpisodeEnemyService episodeEnemyService)
+        public EpisodesController(IEpisodeService episodeService,
+            IEpisodeEnemyService episodeEnemyService,
+            IEpisodeCompanionService episodeCompanionService)
         {
             _episodeService = episodeService ??
                 throw new ArgumentNullException(nameof(episodeService));
 
             _episodeEnemyService = episodeEnemyService ??
                 throw new ArgumentNullException(nameof(episodeEnemyService));
+
+            _episodeCompanionService = episodeCompanionService ??
+                throw new ArgumentNullException(nameof(episodeCompanionService));
         }
 
         /// <summary>
@@ -60,11 +66,25 @@ namespace DoctorWho.Web.Controllers
         /// <param name="enemyId"></param>
         /// <returns></returns>
         [HttpPost("enemies", Name = "AddEnemyToEpisode")]
-        public async Task<IActionResult> AddEnemyToEpisode([FromBody] EpisodeEnemyForCreationDto episodeEnemy)
+        public async Task<ActionResult<EpisodeEnemyDto>> AddEnemyToEpisode([FromBody] EpisodeEnemyForCreationDto episodeEnemy)
         {
             var episodeEnemyAdded = await _episodeEnemyService.CreateEpisodeEnemy(episodeEnemy);
 
             return Ok(episodeEnemyAdded);
+        }
+
+        /// <summary>
+        /// Add companion to episode
+        /// </summary>
+        /// <param name="episodeCompanion"></param>
+        /// <returns></returns>
+        [HttpPost("companions", Name = nameof(AddCompanionToEpisode))]
+        public async Task<ActionResult<EpisodeCompanionDto>> AddCompanionToEpisode(
+            [FromBody] EpisodeCompanionForCreationDto episodeCompanion)
+        {
+            var episodeCompanionAdded = await _episodeCompanionService.CreateEpisodeCompanion(episodeCompanion);
+
+            return Ok(episodeCompanionAdded);
         }
     }
 }

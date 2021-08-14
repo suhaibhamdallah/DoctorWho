@@ -17,9 +17,14 @@ namespace DoctorWho.Web.Services
             _mapper = mapper;
         }
 
-        public async Task<EpisodeEnemyDto> CreateEpisodeEnemy(EpisodeEnemyForCreationDto episode)
+        /// <summary>
+        /// Add enemy to episode
+        /// </summary>
+        /// <param name="episodeEnemy"></param>
+        /// <returns></returns>
+        public async Task<EpisodeEnemyDto> CreateEpisodeEnemy(EpisodeEnemyForCreationDto episodeEnemy)
         {
-            var episodeEnemyToAdd = _mapper.Map<EpisodeEnemy>(episode);
+            var episodeEnemyToAdd = _mapper.Map<EpisodeEnemy>(episodeEnemy);
 
             var addedEpisodeEnemy = await _episdoeEnemyRepository.Create(episodeEnemyToAdd);
 

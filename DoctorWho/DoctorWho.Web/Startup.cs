@@ -46,6 +46,10 @@ namespace DoctorWho.Web
 
             services.AddTransient<IRepository<EpisodeEnemy, EpisodeEnemy, int>, EpisodeEnemyRepository>();
 
+            services.AddTransient<IRepository<Companion, Companion, int>, CompanionRepository>();
+
+            services.AddTransient<IRepository<EpisodeCompanion, EpisodeCompanion, int>, EpisodeCompanionRepository>();
+
             services.AddTransient<IDoctorService, DoctorService>();
 
             services.AddTransient<IEpisodeService, EpisodeService>();
@@ -55,6 +59,10 @@ namespace DoctorWho.Web
             services.AddTransient<IEnemyService, EnemyService>();
 
             services.AddTransient<IEpisodeEnemyService, EpisodeEnemyService>();
+
+            services.AddTransient<ICompanionService, CompanionService>();
+
+            services.AddTransient<IEpisodeCompanionService, EpisodeCompanionService>();
 
             services.AddDbContext<DoctorWhoCoreDbContext>(options =>
             {
@@ -71,6 +79,8 @@ namespace DoctorWho.Web
             services.AddTransient<IValidator<AuthorDto>, AuthorDtoValidator>();
 
             services.AddTransient<IValidator<EpisodeEnemyForCreationDto>, EpisodeEnemyForCreationDtoValidator>();
+
+            services.AddTransient<IValidator<EpisodeCompanionForCreationDto>, EpisodeCompanionForCreationDtoValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
