@@ -12,11 +12,15 @@ namespace DoctorWho.Web.Controllers
     public class EpisodesController : ControllerBase
     {
         private readonly IEpisodeService _episodeService;
+        private readonly IEpisodeEnemyService _episodeEnemyService;
 
-        public EpisodesController(IEpisodeService episodeService)
+        public EpisodesController(IEpisodeService episodeService, IEpisodeEnemyService episodeEnemyService)
         {
             _episodeService = episodeService ??
                 throw new ArgumentNullException(nameof(episodeService));
+
+            _episodeEnemyService = episodeEnemyService ??
+                throw new ArgumentNullException(nameof(episodeEnemyService));
         }
 
         /// <summary>
@@ -47,6 +51,20 @@ namespace DoctorWho.Web.Controllers
             var addedEpisode = await _episodeService.CreateEpisode(episode);
 
             return Created("", new { Id = addedEpisode.Id });
+        }
+
+        /// <summary>
+        /// Add enemy to episode
+        /// </summary>
+        /// <param name="episodeId"></param>
+        /// <param name="enemyId"></param>
+        /// <returns></returns>
+        [HttpPost("enemies", Name = "AddEnemyToEpisode")]
+        public async Task<IActionResult> AddEnemyToEpisode([FromBody] EpisodeEnemyForCreationDto episodeEnemy)
+        {
+            var episodeEnemyAdded = await _episodeEnemyService.CreateEpisodeEnemy(episodeEnemy);
+
+            return Ok(episodeEnemyAdded);
         }
     }
 }

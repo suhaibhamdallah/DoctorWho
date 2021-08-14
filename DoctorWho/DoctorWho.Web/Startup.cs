@@ -42,17 +42,25 @@ namespace DoctorWho.Web
 
             services.AddTransient<IRepository<Author, Author, int>, AuthorRepository>();
 
+            services.AddTransient<IRepository<Enemy, Enemy, int>, EnemyRepository>();
+
+            services.AddTransient<IRepository<EpisodeEnemy, EpisodeEnemy, int>, EpisodeEnemyRepository>();
+
             services.AddTransient<IDoctorService, DoctorService>();
 
             services.AddTransient<IEpisodeService, EpisodeService>();
 
             services.AddTransient<IAuthorService, AuthorService>();
 
-            services.AddDbContext<DoctorWhoCoreDbContext>(options => 
+            services.AddTransient<IEnemyService, EnemyService>();
+
+            services.AddTransient<IEpisodeEnemyService, EpisodeEnemyService>();
+
+            services.AddDbContext<DoctorWhoCoreDbContext>(options =>
             {
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
                 options.UseSqlServer(Configuration.GetConnectionString("DB"));
-            });
+            }, ServiceLifetime.Transient);
 
             services.AddFluentValidation();
 
@@ -61,6 +69,8 @@ namespace DoctorWho.Web
             services.AddTransient<IValidator<EpisodeForCreationDto>, EpisodeForCreationDtoValidator>();
 
             services.AddTransient<IValidator<AuthorDto>, AuthorDtoValidator>();
+
+            services.AddTransient<IValidator<EpisodeEnemyForCreationDto>, EpisodeEnemyForCreationDtoValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

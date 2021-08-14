@@ -13,10 +13,12 @@ namespace DoctorWho.Web.Services
         private readonly IRepository<Episode, EpisodesView, int> _episodeRepository;
         private readonly IMapper _mapper;
 
-        public EpisodeService(IRepository<Episode, EpisodesView, int> doctorRepository, IMapper mapper)
+        public EpisodeService(IRepository<Episode, EpisodesView, int> doctorRepository,
+            IMapper mapper)
         {
             _episodeRepository = doctorRepository ??
                 throw new ArgumentNullException(nameof(doctorRepository));
+
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
         }
@@ -38,6 +40,20 @@ namespace DoctorWho.Web.Services
         }
 
         /// <summary>
+        /// Get episode by id
+        /// </summary>
+        /// <param name="episodeId"></param>
+        /// <returns></returns>
+        public async Task<EpisodeDto> GetEpisode(int episodeId)
+        {
+            var episodeFromRepo = await _episodeRepository.FindById(episodeId);
+
+            var episodeToReturn = _mapper.Map<EpisodeDto>(episodeFromRepo);
+
+            return episodeToReturn;
+        }
+
+        /// <summary>
         /// Get episodes collection from database
         /// </summary>
         /// <returns></returns>
@@ -46,6 +62,17 @@ namespace DoctorWho.Web.Services
             var episodesFromRepo = await _episodeRepository.FindAll();
 
             return _mapper.Map<IEnumerable<EpisodeDto>>(episodesFromRepo);
+        }
+
+        /// <summary>
+        /// Check if the episode exist or not
+        /// </summary>
+        /// <param name="episodeId"></param>
+        /// <returns></returns>
+        public bool IsEpisodeExist(int episodeId)
+        {
+
+            return !(GetEpisode(episodeId).Result is null);
         }
     }
 }
