@@ -1,5 +1,6 @@
 ﻿using DoctorWho.Web.Models;
 using DoctorWho.Web.Services;
+using DoctorWho.Web.Validators;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,12 @@ namespace DoctorWho.Web.Controllers
         private readonly IEpisodeService _episodeService;
         private readonly IEpisodeEnemyService _episodeEnemyService;
         private readonly IEpisodeCompanionService _episodeCompanionService;
+        private readonly IEnemyService _enemyService;
 
         public EpisodesController(IEpisodeService episodeService,
             IEpisodeEnemyService episodeEnemyService,
-            IEpisodeCompanionService episodeCompanionService)
+            IEpisodeCompanionService episodeCompanionService,
+            IEnemyService enemyService)
         {
             _episodeService = episodeService ??
                 throw new ArgumentNullException(nameof(episodeService));
@@ -27,6 +30,9 @@ namespace DoctorWho.Web.Controllers
 
             _episodeCompanionService = episodeCompanionService ??
                 throw new ArgumentNullException(nameof(episodeCompanionService));
+
+            _enemyService = enemyService ??
+                throw new ArgumentNullException(nameof(enemyService));
         }
 
         /// <summary>
@@ -65,10 +71,28 @@ namespace DoctorWho.Web.Controllers
         /// <param name="episodeId"></param>
         /// <param name="enemyId"></param>
         /// <returns></returns>
-        [HttpPost("enemies", Name = "AddEnemyToEpisode")]
-        public async Task<ActionResult<EpisodeEnemyDto>> AddEnemyToEpisode([FromBody] EpisodeEnemyForCreationDto episodeEnemy)
+        [HttpPost("{episodeId}/enemies/{enemyId}", Name = "AddEnemyToEpisode")]
+        public async Task<ActionResult<EpisodeEnemyDto>> AddEnemyToEpisode([FromRoute] int episodeId,
+            [FromRoute] int enemyId)
         {
-            var episodeEnemyAdded = await _episodeEnemyService.CreateEpisodeEnemy(episodeEnemy);
+            var episodeEnemyToAdd = new EpisodeEnemyForCreationDto();
+            episodeEnemyToAdd.EpisodeId = episodeId;
+            episodeEnemyToAdd.EnemyId = enemyId;
+
+            var validator = new EpisodeEnemyForCreationDtoValidator(
+                episodeEnemyToAdd,
+                _episodeService,
+                _enemyService,
+                _episodeEnemyService);
+            var validatorResult = validator.Validate(episodeEnemyToAdd);
+
+            if (!validatorResult.IsValid)
+            {
+
+                return BadRequest(validatorResult.Errors);
+            } 
+
+            var episodeEnemyAdded = await _episodeEnemyService.CreateEpisodeEnemy(episodeEnemyToAdd);
 
             return Ok(episodeEnemyAdded);
         }

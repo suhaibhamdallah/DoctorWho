@@ -2,6 +2,7 @@
 using DoctorWho.Db.Models;
 using DoctorWho.Db.Repositories;
 using DoctorWho.Web.Models;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DoctorWho.Web.Services
@@ -31,6 +32,24 @@ namespace DoctorWho.Web.Services
             var episodeEnemyToReturn = _mapper.Map<EpisodeEnemyDto>(addedEpisodeEnemy);
 
             return episodeEnemyToReturn;
+        }
+
+        /// <summary>
+        /// Check if new episodeEnemyForCreation object is exist in the database
+        /// </summary>
+        /// <param name="episodeEnemyForCreation"></param>
+        /// <returns></returns>
+        public async Task<bool> IsEpisodeEnemyDublicated(EpisodeEnemyForCreationDto episodeEnemyForCreation)
+        {
+            var episodeEnemies = await _episdoeEnemyRepository.FindAll();
+
+            var result = episodeEnemies
+                .Where(episodeEnemy =>
+                episodeEnemy.EpisodeId == episodeEnemyForCreation.EpisodeId &&
+                episodeEnemy.EnemyId == episodeEnemyForCreation.EnemyId)
+                .FirstOrDefault();
+
+            return result is null;
         }
     }
 }

@@ -10,8 +10,12 @@ namespace DoctorWho.Web.Validators
     {
         private readonly IEpisodeService _episodeService;
         private readonly IEnemyService _enemyService;
+        private readonly IEpisodeEnemyService _episodeEnemyService;
 
-        public EpisodeEnemyForCreationDtoValidator(IEpisodeService episodeService, IEnemyService enemyService)
+        public EpisodeEnemyForCreationDtoValidator(EpisodeEnemyForCreationDto episodeEnemyForCreation,
+            IEpisodeService episodeService,
+            IEnemyService enemyService,
+            IEpisodeEnemyService episodeEnemyService)
         {
             _episodeService = episodeService ??
                 throw new ArgumentNullException(nameof(episodeService));
@@ -19,13 +23,20 @@ namespace DoctorWho.Web.Validators
             _enemyService = enemyService ??
                 throw new ArgumentNullException(nameof(enemyService));
 
+            _episodeEnemyService = episodeEnemyService ??
+                throw new ArgumentNullException(nameof(episodeEnemyService));
+
             RuleFor(episodeEnemy => episodeEnemy.EpisodeId)
-                .MustAsync((episodeId, token) => CheckEpisodeId(episodeId))
+                .MustAsync((episodeId, token) => CheckEpisodeId(episodeEnemyForCreation.EpisodeId))
                 .WithMessage("Invalid episode id");
 
             RuleFor(episodeEnemy => episodeEnemy.EnemyId)
-                .MustAsync((enemyId, token) => CheckEnemyId(enemyId))
+                .MustAsync((enemyId, token) => CheckEnemyId(episodeEnemyForCreation.EnemyId))
                 .WithMessage("Invalid enemy id");
+
+            RuleFor(episodeEnemy => episodeEnemy)
+                .MustAsync((episodeEnemy, token) => CheckIfEpisodeEnemyDuplicated(episodeEnemy))
+                .WithMessage("Duplicated record");
         }
 
         /// <summary>
@@ -48,6 +59,17 @@ namespace DoctorWho.Web.Validators
         {
 
             return _enemyService.IsEnemyExist(enemyId);
+        }
+
+        /// <summary>
+        /// Check if new episodeEnemyForCreation object is exist in the database
+        /// </summary>
+        /// <param name="episodeEnemy"></param>
+        /// <returns></returns>
+        private async Task<bool> CheckIfEpisodeEnemyDuplicated(EpisodeEnemyForCreationDto episodeEnemy)
+        {
+
+            return await _episodeEnemyService.IsEpisodeEnemyDublicated(episodeEnemy);
         }
     }
 }
