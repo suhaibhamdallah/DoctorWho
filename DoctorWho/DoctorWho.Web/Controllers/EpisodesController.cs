@@ -16,11 +16,13 @@ namespace DoctorWho.Web.Controllers
         private readonly IEpisodeEnemyService _episodeEnemyService;
         private readonly IEpisodeCompanionService _episodeCompanionService;
         private readonly IEnemyService _enemyService;
+        private readonly ICompanionService _companionService;
 
         public EpisodesController(IEpisodeService episodeService,
             IEpisodeEnemyService episodeEnemyService,
             IEpisodeCompanionService episodeCompanionService,
-            IEnemyService enemyService)
+            IEnemyService enemyService,
+            ICompanionService companionService)
         {
             _episodeService = episodeService ??
                 throw new ArgumentNullException(nameof(episodeService));
@@ -33,6 +35,9 @@ namespace DoctorWho.Web.Controllers
 
             _enemyService = enemyService ??
                 throw new ArgumentNullException(nameof(enemyService));
+
+            _companionService = companionService ??
+                throw new ArgumentNullException(nameof(companionService));
         }
 
         /// <summary>
@@ -84,6 +89,7 @@ namespace DoctorWho.Web.Controllers
                 _episodeService,
                 _enemyService,
                 _episodeEnemyService);
+
             var validatorResult = validator.Validate(episodeEnemyToAdd);
 
             if (!validatorResult.IsValid)
@@ -102,11 +108,29 @@ namespace DoctorWho.Web.Controllers
         /// </summary>
         /// <param name="episodeCompanion"></param>
         /// <returns></returns>
-        [HttpPost("companions", Name = nameof(AddCompanionToEpisode))]
+        [HttpPost("{episodeId}/companions/{companionId}", Name = nameof(AddCompanionToEpisode))]
         public async Task<ActionResult<EpisodeCompanionDto>> AddCompanionToEpisode(
-            [FromBody] EpisodeCompanionForCreationDto episodeCompanion)
+            [FromRoute] int episodeId,
+            [FromRoute] int companionId)
         {
-            var episodeCompanionAdded = await _episodeCompanionService.CreateEpisodeCompanion(episodeCompanion);
+            var episodeCompanionToAdd = new EpisodeCompanionForCreationDto();
+            episodeCompanionToAdd.EpisodeId = episodeId;
+            episodeCompanionToAdd.CompanionId = companionId;
+
+            var validator = new EpisodeCompanionForCreationDtoValidator(episodeCompanionToAdd,
+                _episodeService,
+                _companionService,
+                _episodeCompanionService);
+
+            var validatorResult = validator.Validate(episodeCompanionToAdd);
+
+            if (!validatorResult.IsValid)
+            {
+
+                return BadRequest(validatorResult.Errors);
+            }
+
+            var episodeCompanionAdded = await _episodeCompanionService.CreateEpisodeCompanion(episodeCompanionToAdd);
 
             return Ok(episodeCompanionAdded);
         }

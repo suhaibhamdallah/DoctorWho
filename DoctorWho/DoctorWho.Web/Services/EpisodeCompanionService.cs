@@ -2,6 +2,7 @@
 using DoctorWho.Db.Models;
 using DoctorWho.Db.Repositories;
 using DoctorWho.Web.Models;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DoctorWho.Web.Services
@@ -31,6 +32,24 @@ namespace DoctorWho.Web.Services
             var episodeCompanionToReturn = _mapper.Map<EpisodeCompanionDto>(addedEpisodeCompanion);
 
             return episodeCompanionToReturn;
+        }
+
+        /// <summary>
+        /// Check if new episodeCompanion duplicated
+        /// </summary>
+        /// <param name="episodeCompanionForCreation"></param>
+        /// <returns></returns>
+        public async Task<bool> IsEpisodeCompanionDublicated(EpisodeCompanionForCreationDto episodeCompanionForCreation)
+        {
+            var episodeCompanions = await _episodeCompanionRepository.FindAll();
+
+            var result = episodeCompanions
+                .Where(episodeCompanion =>
+                episodeCompanion.EpisodeId == episodeCompanionForCreation.EpisodeId &&
+                episodeCompanion.CompanionId == episodeCompanionForCreation.CompanionId)
+                .FirstOrDefault();
+
+            return result is null;
         }
     }
 }
