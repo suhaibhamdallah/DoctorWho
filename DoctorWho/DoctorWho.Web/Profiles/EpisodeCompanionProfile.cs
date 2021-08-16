@@ -13,6 +13,7 @@ namespace DoctorWho.Web.Profiles
         public EpisodeCompanionProfile()
         {
             CreateMap<EpisodeCompanionForCreationDto, EpisodeCompanion>();
+            CreateMap<EpisodeCompanion, EpisodeCompanionForCreationDto>();
             CreateMap<EpisodeCompanion, EpisodeCompanionDto>();
         }
     }

@@ -9,6 +9,7 @@ namespace DoctorWho.Web.Profiles
         public EpisodeEnemyProfile()
         {
             CreateMap<EpisodeEnemyForCreationDto, EpisodeEnemy>();
+            CreateMap<EpisodeEnemy, EpisodeEnemyForCreationDto>();
             CreateMap<EpisodeEnemy, EpisodeEnemyDto>();
         }
     }
