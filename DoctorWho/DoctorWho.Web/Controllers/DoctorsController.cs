@@ -1,5 +1,6 @@
 ﻿using DoctorWho.Web.Models;
 using DoctorWho.Web.Services;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,16 @@ namespace DoctorWho.Web.Controllers
     public class DoctorsController : ControllerBase
     {
         private readonly IDoctorService _doctorService;
+        private readonly IValidator<DoctorForManipulationDto> _doctorValidator;
 
-        public DoctorsController(IDoctorService doctorService)
+        public DoctorsController(IDoctorService doctorService,
+            IValidator<DoctorForManipulationDto> doctorValidator)
         {
             _doctorService = doctorService ??
                 throw new ArgumentNullException(nameof(doctorService));
+
+            _doctorValidator = doctorValidator ??
+                throw new ArgumentNullException(nameof(doctorValidator));
         }
 
         /// <summary>
@@ -76,9 +82,21 @@ namespace DoctorWho.Web.Controllers
         [HttpDelete("{doctorId}", Name = "Delete Doctor")]
         public async Task<ActionResult<DoctorDto>> DeleteDoctor([FromRoute] int doctorId)
         {
-            if (!_doctorService.DoctorExist(doctorId))
+            var doctorToDelete = new DoctorForManipulationDto
             {
-                return Problem(statusCode: 400, title: "Invalid Id");
+                Id = doctorId
+            };
+
+            var doctorValidatorResult = _doctorValidator.Validate(doctorToDelete,
+                options =>
+            {
+                options.IncludeRuleSets("IdValidation");
+            });
+
+            if (!doctorValidatorResult.IsValid)
+            {
+
+                return BadRequest(doctorValidatorResult.Errors);
             }
 
             var doctorDeleted = await _doctorService.DeleteDoctor(doctorId);

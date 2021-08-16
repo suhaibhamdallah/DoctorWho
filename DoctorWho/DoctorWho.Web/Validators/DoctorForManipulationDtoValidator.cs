@@ -15,9 +15,11 @@ namespace DoctorWho.Web.Validators
             _doctorService = doctorService ??
                 throw new ArgumentNullException(nameof(doctorService));
 
-            RuleFor(doctor => doctor.Id)
+            RuleSet("IdValidation", () => {
+                RuleFor(doctor => doctor.Id)
                 .MustAsync((doctorId, token) => CheckDoctorId(doctorId))
                 .WithMessage("Invalid Id");
+            }); 
 
             RuleFor(doctor => doctor.DoctorName)
                 .NotEmpty();

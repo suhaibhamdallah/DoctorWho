@@ -1,6 +1,7 @@
 ﻿using DoctorWho.Web.Models;
 using DoctorWho.Web.Services;
 using DoctorWho.Web.Validators;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -17,12 +18,16 @@ namespace DoctorWho.Web.Controllers
         private readonly IEpisodeCompanionService _episodeCompanionService;
         private readonly IEnemyService _enemyService;
         private readonly ICompanionService _companionService;
+        private readonly IValidator<EpisodeEnemyForCreationDto> _episodeEnemyValidator;
+        private readonly IValidator<EpisodeCompanionForCreationDto> _episodeCompanionValidator;
 
         public EpisodesController(IEpisodeService episodeService,
             IEpisodeEnemyService episodeEnemyService,
             IEpisodeCompanionService episodeCompanionService,
             IEnemyService enemyService,
-            ICompanionService companionService)
+            ICompanionService companionService,
+            IValidator<EpisodeEnemyForCreationDto> episodeEnemyValidator,
+            IValidator<EpisodeCompanionForCreationDto> episodeCompanionValidator)
         {
             _episodeService = episodeService ??
                 throw new ArgumentNullException(nameof(episodeService));
@@ -38,6 +43,12 @@ namespace DoctorWho.Web.Controllers
 
             _companionService = companionService ??
                 throw new ArgumentNullException(nameof(companionService));
+
+            _episodeEnemyValidator = episodeEnemyValidator ??
+                throw new ArgumentNullException(nameof(episodeEnemyValidator));
+
+            _episodeCompanionValidator = episodeCompanionValidator ??
+                throw new ArgumentNullException(nameof(episodeCompanionValidator));
         }
 
         /// <summary>
@@ -80,22 +91,18 @@ namespace DoctorWho.Web.Controllers
         public async Task<ActionResult<EpisodeEnemyDto>> AddEnemyToEpisode([FromRoute] int episodeId,
             [FromRoute] int enemyId)
         {
-            var episodeEnemyToAdd = new EpisodeEnemyForCreationDto();
-            episodeEnemyToAdd.EpisodeId = episodeId;
-            episodeEnemyToAdd.EnemyId = enemyId;
+            var episodeEnemyToAdd = new EpisodeEnemyForCreationDto
+            {
+                EpisodeId = episodeId,
+                EnemyId = enemyId
+            };
 
-            var validator = new EpisodeEnemyForCreationDtoValidator(
-                episodeEnemyToAdd,
-                _episodeService,
-                _enemyService,
-                _episodeEnemyService);
+            var episodeEnemyValidatorResult = _episodeEnemyValidator.Validate(episodeEnemyToAdd);
 
-            var validatorResult = validator.Validate(episodeEnemyToAdd);
-
-            if (!validatorResult.IsValid)
+            if (!episodeEnemyValidatorResult.IsValid)
             {
 
-                return BadRequest(validatorResult.Errors);
+                return BadRequest(episodeEnemyValidatorResult.Errors);
             } 
 
             var episodeEnemyAdded = await _episodeEnemyService.CreateEpisodeEnemy(episodeEnemyToAdd);
@@ -113,21 +120,17 @@ namespace DoctorWho.Web.Controllers
             [FromRoute] int episodeId,
             [FromRoute] int companionId)
         {
-            var episodeCompanionToAdd = new EpisodeCompanionForCreationDto();
-            episodeCompanionToAdd.EpisodeId = episodeId;
-            episodeCompanionToAdd.CompanionId = companionId;
+            var episodeCompanionToAdd = new EpisodeCompanionForCreationDto {
+                EpisodeId = episodeId,
+                CompanionId = companionId
+            };
 
-            var validator = new EpisodeCompanionForCreationDtoValidator(episodeCompanionToAdd,
-                _episodeService,
-                _companionService,
-                _episodeCompanionService);
+            var episodeCompanionValidatorResult = _episodeCompanionValidator.Validate(episodeCompanionToAdd);
 
-            var validatorResult = validator.Validate(episodeCompanionToAdd);
-
-            if (!validatorResult.IsValid)
+            if (!episodeCompanionValidatorResult.IsValid)
             {
 
-                return BadRequest(validatorResult.Errors);
+                return BadRequest(episodeCompanionValidatorResult.Errors);
             }
 
             var episodeCompanionAdded = await _episodeCompanionService.CreateEpisodeCompanion(episodeCompanionToAdd);

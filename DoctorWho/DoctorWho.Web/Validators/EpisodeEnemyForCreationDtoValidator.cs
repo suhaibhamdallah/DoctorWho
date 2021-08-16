@@ -12,8 +12,7 @@ namespace DoctorWho.Web.Validators
         private readonly IEnemyService _enemyService;
         private readonly IEpisodeEnemyService _episodeEnemyService;
 
-        public EpisodeEnemyForCreationDtoValidator(EpisodeEnemyForCreationDto episodeEnemyForCreation,
-            IEpisodeService episodeService,
+        public EpisodeEnemyForCreationDtoValidator(IEpisodeService episodeService,
             IEnemyService enemyService,
             IEpisodeEnemyService episodeEnemyService)
         {
@@ -27,11 +26,11 @@ namespace DoctorWho.Web.Validators
                 throw new ArgumentNullException(nameof(episodeEnemyService));
 
             RuleFor(episodeEnemy => episodeEnemy.EpisodeId)
-                .MustAsync((episodeId, token) => CheckEpisodeId(episodeEnemyForCreation.EpisodeId))
+                .MustAsync((episodeId, token) => CheckEpisodeId(episodeId))
                 .WithMessage("Invalid episode id");
 
             RuleFor(episodeEnemy => episodeEnemy.EnemyId)
-                .MustAsync((enemyId, token) => CheckEnemyId(episodeEnemyForCreation.EnemyId))
+                .MustAsync((enemyId, token) => CheckEnemyId(enemyId))
                 .WithMessage("Invalid enemy id");
 
             RuleFor(episodeEnemy => episodeEnemy)

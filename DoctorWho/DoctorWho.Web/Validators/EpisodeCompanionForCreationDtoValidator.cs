@@ -12,9 +12,9 @@ namespace DoctorWho.Web.Validators
         private readonly ICompanionService _companionService;
         private readonly IEpisodeCompanionService _episodeCompanionService;
 
-        public EpisodeCompanionForCreationDtoValidator(EpisodeCompanionForCreationDto episodeCompanion,
-            IEpisodeService episodeService,
-            ICompanionService companionService, IEpisodeCompanionService episodeCompanionService)
+        public EpisodeCompanionForCreationDtoValidator(IEpisodeService episodeService,
+            ICompanionService companionService,
+            IEpisodeCompanionService episodeCompanionService)
         {
             _episodeService = episodeService ??
                 throw new ArgumentNullException(nameof(episodeService));
@@ -26,11 +26,11 @@ namespace DoctorWho.Web.Validators
                 throw new ArgumentNullException(nameof(episodeCompanionService));
 
             RuleFor(episodeCompanion => episodeCompanion.EpisodeId)
-                .MustAsync((episodeId, token) => CheckEpisodeId(episodeCompanion.EpisodeId))
+                .MustAsync((episodeId, token) => CheckEpisodeId(episodeId))
                 .WithMessage("Invalid episode id");
 
             RuleFor(episodeCompanion => episodeCompanion.CompanionId)
-                .MustAsync((companionId, token) => CheckCompanionId(episodeCompanion.CompanionId))
+                .MustAsync((companionId, token) => CheckCompanionId(companionId))
                 .WithMessage("Invalid companion id");
 
             RuleFor(episodeCompanion => episodeCompanion)
