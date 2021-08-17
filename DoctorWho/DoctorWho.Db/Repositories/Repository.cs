@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using DoctorWho.Db.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DoctorWho.Db.Repositories
 {
     public abstract class Repository<T, VEntity, TId>
         : IRepository<T, VEntity, TId> where T : class
-        where VEntity : class
+        where VEntity : class,  IModel<TId>
     {
         protected DoctorWhoCoreDbContext context;
 
@@ -19,12 +22,15 @@ namespace DoctorWho.Db.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public virtual T Create(T entity)
+        public virtual async Task<T> Create(T entity)
         {
-
-            return context
-                .Add(entity)
+            var entityToCreate = (await context
+                .AddAsync(entity))
                 .Entity;
+
+            context.SaveChanges();
+
+            return entityToCreate;
         }
 
         /// <summary>
@@ -35,9 +41,14 @@ namespace DoctorWho.Db.Repositories
         public virtual T Delete(T entity)
         {
 
-            return context
+            var entityToDelete = context
+                .Set<T>()
                 .Remove(entity)
                 .Entity;
+
+            context.SaveChanges();
+
+            return entityToDelete;
         }
 
         /// <summary>
@@ -48,9 +59,14 @@ namespace DoctorWho.Db.Repositories
         public virtual T Update(T entity)
         {
 
-            return context
+            var entityToUpdate = context
+                .Set<T>()
                 .Update(entity)
                 .Entity;
+
+            context.SaveChanges();
+
+            return entityToUpdate;
         }
 
         /// <summary>
@@ -58,31 +74,24 @@ namespace DoctorWho.Db.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public virtual VEntity FindById(TId id)
+        public virtual async Task<VEntity> FindById(TId id) 
         {
 
-            return context
+            return await context
                 .Set<VEntity>()
-                .Find(id);
+                .FindAsync(id);
         }
 
         /// <summary>
         /// Return all the entities from database table
         /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<VEntity> FindAll()
+        public virtual async Task<IEnumerable<VEntity>> FindAll()
         {
-            return context
-                .Set<VEntity>()
-                .ToList();
-        }
 
-        /// <summary>
-        /// Save changes that context tracking it to the database
-        /// </summary>
-        public virtual void SaveChanges()
-        {
-            context.SaveChanges();
+            return (await context
+                .Set<VEntity>()
+                .ToListAsync());
         }
     }
 }

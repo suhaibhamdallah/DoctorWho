@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace DoctorWho.Db.Models
+namespace DoctorWho.Web.Models
 {
-    public class EpisodesView : IModel<int>
+    public class EpisodeDto
     {
         public int Id { get; set; }
         public int SeriesNumber { get; set; }
@@ -11,9 +11,7 @@ namespace DoctorWho.Db.Models
         public string EpisodeTitle { get; set; }
         public DateTime EpisodeDate { get; set; }
         public int? AuthorId { get; set; }
-        public Author Author { get; set; }
         public int? DoctorId { get; set; }
-        public Doctor Doctor { get; set; }
         public string Notes { get; set; }
         public string AuthorName { get; set; }
         public string DoctorName { get; set; }

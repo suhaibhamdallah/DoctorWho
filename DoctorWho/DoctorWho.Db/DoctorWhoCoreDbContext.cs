@@ -27,10 +27,6 @@ namespace DoctorWho.Db
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // TODO: CHANGE CONNECTION STRING
-            optionsBuilder.UseSqlServer(
-                "Server = DESKTOP-EDE547A; Database = DoctorWhoCore; Trusted_Connection = True"
-            );
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
