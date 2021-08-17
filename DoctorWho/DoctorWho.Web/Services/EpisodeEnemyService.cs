@@ -43,13 +43,11 @@ namespace DoctorWho.Web.Services
         {
             var episodeEnemies = await _episdoeEnemyRepository.FindAll();
 
-            var result = episodeEnemies
+            return !episodeEnemies
                 .Where(episodeEnemy =>
                 episodeEnemy.EpisodeId == episodeEnemyForCreation.EpisodeId &&
                 episodeEnemy.EnemyId == episodeEnemyForCreation.EnemyId)
-                .FirstOrDefault();
-
-            return result is null;
+                .Any();
         }
     }
 }
