@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DoctorWho.Authentication.Infrastructure\DoctorWho.Authentication.Infrastructure.csproj" />
     <ProjectReference Include="..\DoctorWho.Db\DoctorWho.Db.csproj" />
   </ItemGroup>
 

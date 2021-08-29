@@ -1,6 +1,7 @@
 ﻿using DoctorWho.Web.Models;
 using DoctorWho.Web.Services;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace DoctorWho.Web.Controllers
 {
     [ApiController]
     [Route("api/doctors")]
+    [Authorize]
     public class DoctorsController : ControllerBase
     {
         private readonly IDoctorService _doctorService;

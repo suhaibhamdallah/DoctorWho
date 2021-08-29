@@ -1,3 +1,4 @@
+using DoctorWho.Authentication.Infrastructure.Extensions;
 using DoctorWho.Db;
 using DoctorWho.Db.Models;
 using DoctorWho.Db.Repositories;
@@ -81,6 +82,8 @@ namespace DoctorWho.Web
             services.AddTransient<IValidator<EpisodeEnemyForCreationDto>, EpisodeEnemyForCreationDtoValidator>();
 
             services.AddTransient<IValidator<EpisodeCompanionForCreationDto>, EpisodeCompanionForCreationDtoValidator>();
+
+            services.AddAuthenticationServices(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -104,6 +107,7 @@ namespace DoctorWho.Web
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
