@@ -66,12 +66,16 @@ namespace DoctorWho.Web.Services
         /// <returns></returns>
         public async Task<IEnumerable<InformationRequestDto>> GetApprovedInformationRequests(string userId)
         {
+            var currentDateTime = DateTime.Now;
+
             var userApprovedInformationRequests = _informationRequestRepository
                 .FindAll()
                 .Result
                 .Where(informationRequest =>
                 informationRequest.ApprovalStatus == (int)ApprovalStatus.Approved &&
-                informationRequest.UserId == userId);
+                informationRequest.UserId == userId &&
+                informationRequest.StartTime < currentDateTime &&
+                informationRequest.EndTime > currentDateTime);
 
             var userApprovedInformationRequestsToReturn = _mapper
                 .Map<IEnumerable<InformationRequestDto>>(userApprovedInformationRequests);
@@ -86,12 +90,16 @@ namespace DoctorWho.Web.Services
         /// <returns></returns>
         public async Task<IEnumerable<InformationRequestDto>> GetPendingInformationRequests(string userId)
         {
+            var currentDateTime = DateTime.Now;
+
             var userPendingInformationRequests = _informationRequestRepository
                 .FindAll()
                 .Result
                 .Where(informationRequest =>
                 informationRequest.ApprovalStatus == (int)ApprovalStatus.Unknown &&
-                informationRequest.UserId == userId);
+                informationRequest.UserId == userId &&
+                informationRequest.StartTime < currentDateTime &&
+                informationRequest.EndTime > currentDateTime);
 
             var userPendingInformationRequestsToReturn = _mapper
                 .Map<IEnumerable<InformationRequestDto>>(userPendingInformationRequests);

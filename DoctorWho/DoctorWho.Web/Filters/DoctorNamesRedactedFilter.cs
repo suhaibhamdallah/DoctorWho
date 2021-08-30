@@ -1,19 +1,21 @@
 ﻿using DoctorWho.Web.Enums;
+using DoctorWho.Web.Models;
 using DoctorWho.Web.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DoctorWho.Web.Filters
 {
-    public class CheckInformationRequestsFilter : ActionFilterAttribute
+    public class DoctorNamesRedactedFilter : ActionFilterAttribute
     {
         private readonly IInformationRequestService _informationRequestService;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CheckInformationRequestsFilter(IInformationRequestService informationRequestService,
+        public DoctorNamesRedactedFilter(IInformationRequestService informationRequestService,
             IHttpContextAccessor httpContextAccessor)
         {
             _informationRequestService = informationRequestService ??
@@ -23,7 +25,7 @@ namespace DoctorWho.Web.Filters
                 throw new ArgumentNullException(nameof(httpContextAccessor));
         }
 
-        public override void OnActionExecuting(ActionExecutingContext context)
+        public override void OnActionExecuted(ActionExecutedContext context)
         {
             var currentUserId = _httpContextAccessor
                .HttpContext
@@ -32,15 +34,21 @@ namespace DoctorWho.Web.Filters
                .FirstOrDefault()
                .Value;
 
-            var userInformationRequest =  _informationRequestService.GetApprovedInformationRequests(currentUserId);
-
-            var IsAnyApprovedRequest = userInformationRequest
+            var userInformationRequest = _informationRequestService
+                .GetApprovedInformationRequests(currentUserId)
                 .Result
-                .Any();
+                .FirstOrDefault();
 
-            if (!IsAnyApprovedRequest)
+            var actionResult = (OkObjectResult)context.Result;
+            var doctors = (IEnumerable<DoctorDto>)actionResult.Value;
+
+            if (userInformationRequest.AccessLevel == (int)AccessLevel.Redacted &&
+                userInformationRequest.NetworkType != (int)NetworkType.Internal)
             {
-                context.Result = new JsonResult(_informationRequestService.GetPendingInformationRequests(currentUserId).Result);
+                foreach (var doctor in doctors)
+                {
+                    doctor.DoctorName = "Redacted";
+                }
             }
         }
     }

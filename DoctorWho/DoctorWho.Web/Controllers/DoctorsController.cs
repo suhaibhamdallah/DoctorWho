@@ -34,6 +34,7 @@ namespace DoctorWho.Web.Controllers
         /// <returns>Collection of doctors</returns>
         [HttpGet(Name = "GetDoctors")]
         [TypeFilter(typeof(CheckInformationRequestsFilter))]
+        [TypeFilter(typeof(DoctorNamesRedactedFilter))]
         public async Task<ActionResult<IEnumerable<DoctorDto>>> GetDoctors()
         {
             var doctors = await _doctorService.GetDoctors();
