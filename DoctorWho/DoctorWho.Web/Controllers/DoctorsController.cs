@@ -1,4 +1,5 @@
-﻿using DoctorWho.Web.Models;
+﻿using DoctorWho.Web.Filters;
+using DoctorWho.Web.Models;
 using DoctorWho.Web.Services;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
@@ -32,6 +33,7 @@ namespace DoctorWho.Web.Controllers
         /// </summary>
         /// <returns>Collection of doctors</returns>
         [HttpGet(Name = "GetDoctors")]
+        [TypeFilter(typeof(CheckInformationRequestsFilter))]
         public async Task<ActionResult<IEnumerable<DoctorDto>>> GetDoctors()
         {
             var doctors = await _doctorService.GetDoctors();

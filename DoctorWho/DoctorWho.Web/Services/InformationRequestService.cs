@@ -60,6 +60,26 @@ namespace DoctorWho.Web.Services
         }
 
         /// <summary>
+        /// Get user's approved request
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<InformationRequestDto>> GetApprovedInformationRequests(string userId)
+        {
+            var userApprovedInformationRequests = _informationRequestRepository
+                .FindAll()
+                .Result
+                .Where(informationRequest =>
+                informationRequest.ApprovalStatus == (int)ApprovalStatus.Approved &&
+                informationRequest.UserId == userId);
+
+            var userApprovedInformationRequestsToReturn = _mapper
+                .Map<IEnumerable<InformationRequestDto>>(userApprovedInformationRequests);
+
+            return userApprovedInformationRequestsToReturn;
+        }
+
+        /// <summary>
         /// Get user's pending request
         /// </summary>
         /// <param name="userId"></param>
