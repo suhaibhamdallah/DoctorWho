@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using DoctorWho.Db.Models;
 using DoctorWho.Db.Repositories;
+using DoctorWho.Web.Enums;
 using DoctorWho.Web.Models;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DoctorWho.Web.Services
@@ -23,6 +26,23 @@ namespace DoctorWho.Web.Services
         }
 
         /// <summary>
+        /// Approve Information request
+        /// </summary>
+        /// <param name="requestId"></param>
+        /// <returns></returns>
+        public async Task<InformationRequestDto> ApproveInformationRequest(string requestId)
+        {
+            var informationRequestToApprove = await _informationRequestRepository.FindById(requestId);
+            informationRequestToApprove.ApprovalStatus = (int)ApprovalStatus.Approved;
+
+            var approvedInformationRequest = _informationRequestRepository.Update(informationRequestToApprove);
+
+            var approvedInformationRequestToReturn = _mapper.Map<InformationRequestDto>(approvedInformationRequest);
+
+            return approvedInformationRequestToReturn;
+        }
+
+        /// <summary>
         /// Create now information request
         /// </summary>
         /// <param name="informationRequest"></param>
@@ -37,6 +57,26 @@ namespace DoctorWho.Web.Services
             var informationRequestToReturn = _mapper.Map<InformationRequestDto>(informationRequestCreated);
 
             return informationRequestToReturn;
+        }
+
+        /// <summary>
+        /// Get user's pending request
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<InformationRequestDto>> GetPendingInformationRequests(string userId)
+        {
+            var userPendingInformationRequests = _informationRequestRepository
+                .FindAll()
+                .Result
+                .Where(informationRequest =>
+                informationRequest.ApprovalStatus == (int)ApprovalStatus.Unknown &&
+                informationRequest.UserId == userId);
+
+            var userPendingInformationRequestsToReturn = _mapper
+                .Map<IEnumerable<InformationRequestDto>>(userPendingInformationRequests);
+
+            return userPendingInformationRequestsToReturn;
         }
     }
 }
