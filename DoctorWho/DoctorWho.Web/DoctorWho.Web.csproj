@@ -15,4 +15,8 @@
     <ProjectReference Include="..\DoctorWho.Db\DoctorWho.Db.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Filters\" />
+  </ItemGroup>
+
 </Project>

@@ -51,6 +51,8 @@ namespace DoctorWho.Web
 
             services.AddTransient<IRepository<EpisodeCompanion, EpisodeCompanion, int>, EpisodeCompanionRepository>();
 
+            services.AddTransient<IRepository<InformationRequest, InformationRequest, string>, InformationRequestRepository>();
+
             services.AddTransient<IDoctorService, DoctorService>();
 
             services.AddTransient<IEpisodeService, EpisodeService>();
@@ -64,6 +66,8 @@ namespace DoctorWho.Web
             services.AddTransient<ICompanionService, CompanionService>();
 
             services.AddTransient<IEpisodeCompanionService, EpisodeCompanionService>();
+
+            services.AddTransient<IInformationRequestService, InformationRequestService>();
 
             services.AddDbContext<DoctorWhoCoreDbContext>(options =>
             {
@@ -82,6 +86,8 @@ namespace DoctorWho.Web
             services.AddTransient<IValidator<EpisodeEnemyForCreationDto>, EpisodeEnemyForCreationDtoValidator>();
 
             services.AddTransient<IValidator<EpisodeCompanionForCreationDto>, EpisodeCompanionForCreationDtoValidator>();
+
+            services.AddTransient<IValidator<InformationRequestForCreationDto>, InformationRequestForCreationDtoValidator>();
 
             services.AddAuthenticationServices(Configuration);
         }
