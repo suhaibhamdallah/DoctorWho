@@ -13,6 +13,7 @@ namespace DoctorWho.Db
         public DbSet<Episode> Episodes { get; set; }
         public DbSet<EpisodeCompanion> EpisodeCompanions { get; set; }
         public DbSet<EpisodeEnemy> EpisodeEnemies { get; set; }
+        public DbSet<InformationRequest> InformationRequests { get; set; }
         public DbSet<EpisodesView> ViewEpisodes { get; set; }
 
         public DoctorWhoCoreDbContext()
