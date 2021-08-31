@@ -3,6 +3,7 @@ using DoctorWho.Db.Models;
 using DoctorWho.Db.Repositories;
 using DoctorWho.Web.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DoctorWho.Web.Services
@@ -33,6 +34,19 @@ namespace DoctorWho.Web.Services
             var companionToReturn = _mapper.Map<CompanionDto>(companionFromRepo);
 
             return companionToReturn;
+        }
+
+        /// <summary>
+        /// Get Companions
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<CompanionDto>> GetCompanions()
+        {
+            var companionsFromRepo = await _companionRepository.FindAll();
+
+            var companionsToReturn = _mapper.Map<IEnumerable<CompanionDto>>(companionsFromRepo);
+
+            return companionsToReturn;
         }
 
         /// <summary>
