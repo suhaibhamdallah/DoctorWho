@@ -1,4 +1,4 @@
-﻿using DoctorWho.Web.Enums;
+﻿using DoctorWho.Web.Extensions;
 using DoctorWho.Web.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,14 +25,9 @@ namespace DoctorWho.Web.Filters
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            var currentUserId = _httpContextAccessor
-               .HttpContext
-               .User
-               .Claims
-               .FirstOrDefault()
-               .Value;
+            var currentUserId = _httpContextAccessor.GetCurrentUserId();
 
-            var userInformationRequest =  _informationRequestService.GetApprovedInformationRequests(currentUserId);
+            var userInformationRequest = _informationRequestService.GetApprovedInformationRequests(currentUserId);
 
             var IsAnyApprovedRequest = userInformationRequest
                 .Result

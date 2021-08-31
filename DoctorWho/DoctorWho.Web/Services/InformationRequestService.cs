@@ -66,16 +66,7 @@ namespace DoctorWho.Web.Services
         /// <returns></returns>
         public async Task<IEnumerable<InformationRequestDto>> GetApprovedInformationRequests(string userId)
         {
-            var currentDateTime = DateTime.Now;
-
-            var userApprovedInformationRequests = _informationRequestRepository
-                .FindAll()
-                .Result
-                .Where(informationRequest =>
-                informationRequest.ApprovalStatus == (int)ApprovalStatus.Approved &&
-                informationRequest.UserId == userId &&
-                informationRequest.StartTime < currentDateTime &&
-                informationRequest.EndTime > currentDateTime);
+            var userApprovedInformationRequests = GetInformationRequestsByApprovalStatus(userId, ApprovalStatus.Approved);
 
             var userApprovedInformationRequestsToReturn = _mapper
                 .Map<IEnumerable<InformationRequestDto>>(userApprovedInformationRequests);
@@ -90,21 +81,37 @@ namespace DoctorWho.Web.Services
         /// <returns></returns>
         public async Task<IEnumerable<InformationRequestDto>> GetPendingInformationRequests(string userId)
         {
-            var currentDateTime = DateTime.Now;
-
-            var userPendingInformationRequests = _informationRequestRepository
-                .FindAll()
-                .Result
-                .Where(informationRequest =>
-                informationRequest.ApprovalStatus == (int)ApprovalStatus.Unknown &&
-                informationRequest.UserId == userId &&
-                informationRequest.StartTime < currentDateTime &&
-                informationRequest.EndTime > currentDateTime);
+            var userPendingInformationRequests = GetInformationRequestsByApprovalStatus(userId, ApprovalStatus.Unknown);
 
             var userPendingInformationRequestsToReturn = _mapper
                 .Map<IEnumerable<InformationRequestDto>>(userPendingInformationRequests);
 
             return userPendingInformationRequestsToReturn;
+        }
+
+        /// <summary>
+        /// Get information request by approvalstatus
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="approvalStatus"></param>
+        /// <returns></returns>
+        private IEnumerable<InformationRequestDto> GetInformationRequestsByApprovalStatus(string userId, ApprovalStatus approvalStatus)
+        {
+            var currentDateTime = DateTime.Now;
+
+            var userInformationRequests = _informationRequestRepository
+                .FindAll()
+                .Result
+                .Where(informationRequest =>
+                informationRequest.UserId == userId &&
+                informationRequest.ApprovalStatus == (int)approvalStatus &&
+                informationRequest.StartTime < currentDateTime &&
+                informationRequest.EndTime > currentDateTime);
+
+            var userInformationRequestsToReturn = _mapper
+                .Map<IEnumerable<InformationRequestDto>>(userInformationRequests);
+
+            return userInformationRequestsToReturn;
         }
     }
 }

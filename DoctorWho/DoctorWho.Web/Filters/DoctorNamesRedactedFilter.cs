@@ -1,4 +1,5 @@
 ﻿using DoctorWho.Web.Enums;
+using DoctorWho.Web.Extensions;
 using DoctorWho.Web.Models;
 using DoctorWho.Web.Services;
 using Microsoft.AspNetCore.Http;
@@ -27,28 +28,24 @@ namespace DoctorWho.Web.Filters
 
         public override void OnActionExecuted(ActionExecutedContext context)
         {
-            var currentUserId = _httpContextAccessor
-               .HttpContext
-               .User
-               .Claims
-               .FirstOrDefault()
-               .Value;
+            var currentUserId = _httpContextAccessor.GetCurrentUserId();
 
             var userInformationRequest = _informationRequestService
                 .GetApprovedInformationRequests(currentUserId)
                 .Result
                 .FirstOrDefault();
 
-            var actionResult = (OkObjectResult)context.Result;
-            var doctors = (IEnumerable<DoctorDto>)actionResult.Value;
-
             if (userInformationRequest.AccessLevel == (int)AccessLevel.Redacted &&
                 userInformationRequest.NetworkType != (int)NetworkType.Internal)
             {
-                foreach (var doctor in doctors)
+                var actionResult = (OkObjectResult)context.Result;
+                var doctors = (IEnumerable<DoctorDto>)actionResult.Value;
+
+                doctors.All(doctor =>
                 {
                     doctor.DoctorName = "Redacted";
-                }
+                    return true;
+                });
             }
         }
     }

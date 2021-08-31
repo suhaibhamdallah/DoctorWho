@@ -1,12 +1,6 @@
 using DoctorWho.Authentication.Infrastructure.Extensions;
 using DoctorWho.Db;
-using DoctorWho.Db.Models;
-using DoctorWho.Db.Repositories;
-using DoctorWho.Web.Models;
-using DoctorWho.Web.Services;
-using DoctorWho.Web.Validators;
-using FluentValidation;
-using FluentValidation.AspNetCore;
+using DoctorWho.Web.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -35,60 +29,16 @@ namespace DoctorWho.Web
                 setupAction.ReturnHttpNotAcceptable = true;
             }).AddNewtonsoftJson(); ;
 
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-            services.AddTransient<IRepository<Doctor, Doctor, int>, DoctorRepository>();
-
-            services.AddTransient<IRepository<Episode, EpisodesView, int>, EpisodeRepository>();
-
-            services.AddTransient<IRepository<Author, Author, int>, AuthorRepository>();
-
-            services.AddTransient<IRepository<Enemy, Enemy, int>, EnemyRepository>();
-
-            services.AddTransient<IRepository<EpisodeEnemy, EpisodeEnemy, int>, EpisodeEnemyRepository>();
-
-            services.AddTransient<IRepository<Companion, Companion, int>, CompanionRepository>();
-
-            services.AddTransient<IRepository<EpisodeCompanion, EpisodeCompanion, int>, EpisodeCompanionRepository>();
-
-            services.AddTransient<IRepository<InformationRequest, InformationRequest, string>, InformationRequestRepository>();
-
-            services.AddTransient<IDoctorService, DoctorService>();
-
-            services.AddTransient<IEpisodeService, EpisodeService>();
-
-            services.AddTransient<IAuthorService, AuthorService>();
-
-            services.AddTransient<IEnemyService, EnemyService>();
-
-            services.AddTransient<IEpisodeEnemyService, EpisodeEnemyService>();
-
-            services.AddTransient<ICompanionService, CompanionService>();
-
-            services.AddTransient<IEpisodeCompanionService, EpisodeCompanionService>();
-
-            services.AddTransient<IInformationRequestService, InformationRequestService>();
-
             services.AddDbContext<DoctorWhoCoreDbContext>(options =>
             {
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
                 options.UseSqlServer(Configuration.GetConnectionString("DB"));
             }, ServiceLifetime.Transient);
 
-            services.AddFluentValidation();
-
-            services.AddTransient<IValidator<DoctorForManipulationDto>, DoctorForManipulationDtoValidator>();
-
-            services.AddTransient<IValidator<EpisodeForCreationDto>, EpisodeForCreationDtoValidator>();
-
-            services.AddTransient<IValidator<AuthorDto>, AuthorDtoValidator>();
-
-            services.AddTransient<IValidator<EpisodeEnemyForCreationDto>, EpisodeEnemyForCreationDtoValidator>();
-
-            services.AddTransient<IValidator<EpisodeCompanionForCreationDto>, EpisodeCompanionForCreationDtoValidator>();
-
-            services.AddTransient<IValidator<InformationRequestForCreationDto>, InformationRequestForCreationDtoValidator>();
-
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddRequiredRepositories();
+            services.AddRequiredServices();
+            services.AddRequiredValidators();
             services.AddAuthenticationServices(Configuration);
         }
 
