@@ -24,10 +24,6 @@ namespace DoctorWho.Web.Validators
             RuleFor(informationRequest => informationRequest.AccessLevel)
                .InclusiveBetween(0, Enum.GetNames(typeof(AccessLevel)).Length - 1)
                .WithMessage("Invalid Access Level");
-
-            RuleFor(informationRequest => informationRequest.NetworkType)
-               .InclusiveBetween(0, Enum.GetNames(typeof(NetworkType)).Length - 1)
-               .WithMessage("Invalid Network Type");
         }
     }
 }

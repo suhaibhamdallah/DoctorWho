@@ -2,6 +2,7 @@
 using DoctorWho.Authentication.Infrastructure.Models;
 using FluentValidation;
 using System;
+using DoctorWho.Authentication.Infrastructure.Enumeration;
 
 namespace DoctorWho.Authentication.Infrastructure.Validators
 {
@@ -30,6 +31,10 @@ namespace DoctorWho.Authentication.Infrastructure.Validators
             RuleFor(user => user.Password)
                 .NotEmpty()
                 .WithMessage("Password is required");
+
+            RuleFor(user => user.NetworkType)
+               .InclusiveBetween(0, Enum.GetNames(typeof(NetworkType)).Length - 1)
+               .WithMessage("Invalid Network Type");
         }
     }
 }

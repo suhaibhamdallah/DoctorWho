@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DoctorWho.Authentication.Infrastructure.Enumeration;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Linq;
 
@@ -17,6 +18,18 @@ namespace DoctorWho.Web.Extensions
 
             return currentUserId ??
                 throw new UnauthorizedAccessException();
+        }
+
+        public static int GetGurrentUserNetworkType(this IHttpContextAccessor httpContextAccessor)
+        {
+            var currentUserNetworkType = int.Parse(httpContextAccessor
+                .HttpContext
+                .User
+                .Claims
+                .FirstOrDefault(claim => claim.Type == typeof(NetworkType).Name)
+                .Value);
+
+            return currentUserNetworkType;
         }
     }
 }

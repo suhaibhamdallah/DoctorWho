@@ -1,4 +1,4 @@
-﻿namespace DoctorWho.Web.Enums
+﻿namespace DoctorWho.Authentication.Infrastructure.Enumeration
 {
     public enum NetworkType
     {

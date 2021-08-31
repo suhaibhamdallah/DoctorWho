@@ -18,7 +18,7 @@ namespace DoctorWho.Authentication.Db
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
+
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

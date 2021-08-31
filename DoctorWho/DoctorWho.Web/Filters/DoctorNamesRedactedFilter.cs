@@ -1,4 +1,5 @@
-﻿using DoctorWho.Web.Enums;
+﻿using DoctorWho.Authentication.Infrastructure.Enumeration;
+using DoctorWho.Web.Enums;
 using DoctorWho.Web.Extensions;
 using DoctorWho.Web.Models;
 using DoctorWho.Web.Services;
@@ -29,6 +30,7 @@ namespace DoctorWho.Web.Filters
         public override void OnActionExecuted(ActionExecutedContext context)
         {
             var currentUserId = _httpContextAccessor.GetCurrentUserId();
+            var currentUserNetworkType = _httpContextAccessor.GetGurrentUserNetworkType();
 
             var userInformationRequest = _informationRequestService
                 .GetApprovedInformationRequests(currentUserId)
@@ -36,7 +38,7 @@ namespace DoctorWho.Web.Filters
                 .FirstOrDefault();
 
             if (userInformationRequest.AccessLevel == (int)AccessLevel.Redacted &&
-                userInformationRequest.NetworkType != (int)NetworkType.Internal)
+                currentUserNetworkType != (int)NetworkType.Internal)
             {
                 var actionResult = (OkObjectResult)context.Result;
                 var doctors = (IEnumerable<DoctorDto>)actionResult.Value;

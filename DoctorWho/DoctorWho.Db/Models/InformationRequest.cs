@@ -22,9 +22,6 @@ namespace DoctorWho.Db.Models
         [Required]
         public int AccessLevel { get; set; }
 
-        [Required]
-        public int NetworkType { get; set; }
-
         public string ModifiedBy { get; set; } 
     }
 }
