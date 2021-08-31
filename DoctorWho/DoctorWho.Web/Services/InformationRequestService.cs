@@ -2,7 +2,9 @@
 using DoctorWho.Db.Models;
 using DoctorWho.Db.Repositories;
 using DoctorWho.Web.Enums;
+using DoctorWho.Web.Extensions;
 using DoctorWho.Web.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,15 +16,20 @@ namespace DoctorWho.Web.Services
     {
         private readonly IRepository<InformationRequest, InformationRequest, string> _informationRequestRepository;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public InformationRequestService(IRepository<InformationRequest, InformationRequest, string> informationRequestRepository,
-            IMapper mapper)
+            IMapper mapper,
+            IHttpContextAccessor httpContextAccessor)
         {
             _informationRequestRepository = informationRequestRepository ??
                 throw new ArgumentNullException(nameof(informationRequestRepository));
 
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
+
+            _httpContextAccessor = httpContextAccessor ??
+                throw new ArgumentNullException(nameof(httpContextAccessor));
         }
 
         /// <summary>
@@ -34,6 +41,7 @@ namespace DoctorWho.Web.Services
         {
             var informationRequestToApprove = await _informationRequestRepository.FindById(requestId);
             informationRequestToApprove.ApprovalStatus = (int)ApprovalStatus.Approved;
+            informationRequestToApprove.ModifiedBy = _httpContextAccessor.GetCurrentUserId();
 
             var approvedInformationRequest = _informationRequestRepository.Update(informationRequestToApprove);
 

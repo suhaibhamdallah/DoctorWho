@@ -24,5 +24,7 @@ namespace DoctorWho.Db.Models
 
         [Required]
         public int NetworkType { get; set; }
+
+        public string ModifiedBy { get; set; } 
     }
 }

@@ -10,5 +10,6 @@ namespace DoctorWho.Web.Models
         public int ApprovalStatus { get; set; }
         public int AccessLevel { get; set; }
         public int NetworkType { get; set; }
+        public string ModifiedBy { get; set; }
     }
 }
