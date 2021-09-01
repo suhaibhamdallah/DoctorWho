@@ -17,5 +17,7 @@ namespace DoctorWho.Web.Models
         public string DoctorName { get; set; }
         public string Companions { get; set; }
         public string Enemies { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime ModifiedAt { get; set; }
     }
 }

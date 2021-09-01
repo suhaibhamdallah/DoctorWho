@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DoctorWho.Db.Models
 {
@@ -19,5 +20,10 @@ namespace DoctorWho.Db.Models
 
         public DateTime FirstEpisodeDate { get; set; }
         public DateTime LastEpisodeDate { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime CreatedAt { get; }
+
+        public DateTime ModifiedAt { get; set; } = DateTime.Now;
     }
 }

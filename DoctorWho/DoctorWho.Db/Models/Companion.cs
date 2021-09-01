@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DoctorWho.Db.Models
 {
@@ -12,5 +14,10 @@ namespace DoctorWho.Db.Models
 
         [MaxLength(200)]
         public string WhoPlayed { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime CreatedAt { get; }
+
+        public DateTime ModifiedAt { get; set; } = DateTime.Now;
     }
 }

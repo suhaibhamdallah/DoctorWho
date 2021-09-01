@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DoctorWho.Db.Models
 {
@@ -31,5 +32,10 @@ namespace DoctorWho.Db.Models
 
         [MaxLength(1800)]
         public string Notes { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime CreatedAt { get; }
+
+        public DateTime ModifiedAt { get; set; } = DateTime.Now;
     }
 }

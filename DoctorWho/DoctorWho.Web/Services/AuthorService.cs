@@ -28,6 +28,7 @@ namespace DoctorWho.Web.Services
         public AuthorDto UpdateAuthor(AuthorDto author)
         {
             var authorToUpdate = _mapper.Map<Author>(author);
+            authorToUpdate.ModifiedAt = DateTime.Now;
 
             var updatedAuthor = _authorRepository.Update(authorToUpdate);
 

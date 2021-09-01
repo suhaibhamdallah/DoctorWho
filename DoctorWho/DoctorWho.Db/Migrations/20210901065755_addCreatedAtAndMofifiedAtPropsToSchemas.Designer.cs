@@ -4,14 +4,16 @@ using DoctorWho.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DoctorWho.Db.Migrations
 {
     [DbContext(typeof(DoctorWhoCoreDbContext))]
-    partial class DoctorWhoCoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210901065755_addCreatedAtAndMofifiedAtPropsToSchemas")]
+    partial class addCreatedAtAndMofifiedAtPropsToSchemas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,9 +34,7 @@ namespace DoctorWho.Db.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getdate()");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
@@ -48,57 +48,57 @@ namespace DoctorWho.Db.Migrations
                         {
                             Id = 1,
                             AuthorName = "Suhaib Hamdallah",
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 202, DateTimeKind.Local).AddTicks(4498),
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 205, DateTimeKind.Local).AddTicks(5333)
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 667, DateTimeKind.Local).AddTicks(8199),
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 670, DateTimeKind.Local).AddTicks(6895)
                         },
                         new
                         {
                             Id = 2,
                             AuthorName = "Anas Zakarneh",
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 205, DateTimeKind.Local).AddTicks(6421),
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 205, DateTimeKind.Local).AddTicks(6435)
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 670, DateTimeKind.Local).AddTicks(7958),
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 670, DateTimeKind.Local).AddTicks(7974)
                         },
                         new
                         {
                             Id = 3,
                             AuthorName = "Mohammad Abu-Qasedo",
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 205, DateTimeKind.Local).AddTicks(6456),
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 205, DateTimeKind.Local).AddTicks(6460)
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 670, DateTimeKind.Local).AddTicks(7995),
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 670, DateTimeKind.Local).AddTicks(7998)
                         },
                         new
                         {
                             Id = 4,
                             AuthorName = "Stephen Hillenburg",
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 205, DateTimeKind.Local).AddTicks(6463),
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 205, DateTimeKind.Local).AddTicks(6466)
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 670, DateTimeKind.Local).AddTicks(8001),
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 670, DateTimeKind.Local).AddTicks(8004)
                         },
                         new
                         {
                             Id = 5,
                             AuthorName = "Craig McCracken",
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 205, DateTimeKind.Local).AddTicks(6469),
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 205, DateTimeKind.Local).AddTicks(6472)
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 670, DateTimeKind.Local).AddTicks(8007),
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 670, DateTimeKind.Local).AddTicks(8010)
                         },
                         new
                         {
                             Id = 6,
                             AuthorName = "Genndy Tartakovsky",
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 205, DateTimeKind.Local).AddTicks(6475),
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 205, DateTimeKind.Local).AddTicks(6478)
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 670, DateTimeKind.Local).AddTicks(8014),
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 670, DateTimeKind.Local).AddTicks(8017)
                         },
                         new
                         {
                             Id = 7,
                             AuthorName = "Alex Hirsch",
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 205, DateTimeKind.Local).AddTicks(6481),
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 205, DateTimeKind.Local).AddTicks(6484)
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 670, DateTimeKind.Local).AddTicks(8020),
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 670, DateTimeKind.Local).AddTicks(8022)
                         },
                         new
                         {
                             Id = 8,
                             AuthorName = "Butch Hartman",
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 205, DateTimeKind.Local).AddTicks(6487),
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 205, DateTimeKind.Local).AddTicks(6490)
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 670, DateTimeKind.Local).AddTicks(8025),
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 670, DateTimeKind.Local).AddTicks(8029)
                         });
                 });
 
@@ -115,9 +115,7 @@ namespace DoctorWho.Db.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getdate()");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
@@ -135,57 +133,57 @@ namespace DoctorWho.Db.Migrations
                         {
                             Id = 1,
                             CompanionName = "Zaid Nour",
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 206, DateTimeKind.Local).AddTicks(7037),
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 206, DateTimeKind.Local).AddTicks(7060)
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 671, DateTimeKind.Local).AddTicks(8901),
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 671, DateTimeKind.Local).AddTicks(8927)
                         },
                         new
                         {
                             Id = 2,
                             CompanionName = "Jweid Hamdallah",
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 206, DateTimeKind.Local).AddTicks(7670),
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 206, DateTimeKind.Local).AddTicks(7682)
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 671, DateTimeKind.Local).AddTicks(9573),
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 671, DateTimeKind.Local).AddTicks(9586)
                         },
                         new
                         {
                             Id = 3,
                             CompanionName = "Amjad Salhab",
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 206, DateTimeKind.Local).AddTicks(7703),
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 206, DateTimeKind.Local).AddTicks(7706)
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 671, DateTimeKind.Local).AddTicks(9605),
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 671, DateTimeKind.Local).AddTicks(9608)
                         },
                         new
                         {
                             Id = 4,
                             CompanionName = "Osaid Nour",
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 206, DateTimeKind.Local).AddTicks(7709),
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 206, DateTimeKind.Local).AddTicks(7712)
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 671, DateTimeKind.Local).AddTicks(9611),
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 671, DateTimeKind.Local).AddTicks(9614)
                         },
                         new
                         {
                             Id = 5,
                             CompanionName = "Yazan Fouqha",
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 206, DateTimeKind.Local).AddTicks(7716),
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 206, DateTimeKind.Local).AddTicks(7719)
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 671, DateTimeKind.Local).AddTicks(9617),
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 671, DateTimeKind.Local).AddTicks(9620)
                         },
                         new
                         {
                             Id = 6,
                             CompanionName = "Osaid Hamdallah",
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 206, DateTimeKind.Local).AddTicks(7722),
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 206, DateTimeKind.Local).AddTicks(7725)
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 671, DateTimeKind.Local).AddTicks(9623),
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 671, DateTimeKind.Local).AddTicks(9626)
                         },
                         new
                         {
                             Id = 7,
                             CompanionName = "Hasan Khalaf",
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 206, DateTimeKind.Local).AddTicks(7728),
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 206, DateTimeKind.Local).AddTicks(7731)
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 671, DateTimeKind.Local).AddTicks(9629),
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 671, DateTimeKind.Local).AddTicks(9632)
                         },
                         new
                         {
                             Id = 8,
                             CompanionName = "Rayan Hamdallah",
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 206, DateTimeKind.Local).AddTicks(7734),
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 206, DateTimeKind.Local).AddTicks(7737)
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 671, DateTimeKind.Local).AddTicks(9635),
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 671, DateTimeKind.Local).AddTicks(9638)
                         });
                 });
 
@@ -200,9 +198,7 @@ namespace DoctorWho.Db.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getdate()");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("DoctorName")
                         .IsRequired()
@@ -230,89 +226,89 @@ namespace DoctorWho.Db.Migrations
                         {
                             Id = 1,
                             BithDate = new DateTime(1962, 7, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(407),
                             DoctorName = "Dr. William A. Abdu, M.D, M.S.",
                             DoctorNumber = 1,
                             FirstEpisodeDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastEpisodeDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 206, DateTimeKind.Local).AddTicks(8551)
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(422)
                         },
                         new
                         {
                             Id = 2,
                             BithDate = new DateTime(1962, 7, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(1531),
                             DoctorName = "Dr. Myles. B. Abbott, M.D.",
                             DoctorNumber = 2,
                             FirstEpisodeDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastEpisodeDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 206, DateTimeKind.Local).AddTicks(9758)
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(1545)
                         },
                         new
                         {
                             Id = 3,
                             BithDate = new DateTime(1962, 7, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(1584),
                             DoctorName = "Dr. Khalid Abbed, M.D.",
                             DoctorNumber = 3,
                             FirstEpisodeDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastEpisodeDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 206, DateTimeKind.Local).AddTicks(9807)
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(1587)
                         },
                         new
                         {
                             Id = 4,
                             BithDate = new DateTime(1962, 7, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(1591),
                             DoctorName = "Dr. Fouad. M. Abbas, M.D.",
                             DoctorNumber = 4,
                             FirstEpisodeDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastEpisodeDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 206, DateTimeKind.Local).AddTicks(9812)
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(1594)
                         },
                         new
                         {
                             Id = 5,
                             BithDate = new DateTime(1962, 7, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(1598),
                             DoctorName = "Dr. Naresh Trehan",
                             DoctorNumber = 5,
                             FirstEpisodeDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastEpisodeDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 206, DateTimeKind.Local).AddTicks(9815)
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(1601)
                         },
                         new
                         {
                             Id = 6,
                             BithDate = new DateTime(1962, 7, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(1604),
                             DoctorName = "Dr. Ahmad Assi",
                             DoctorNumber = 6,
                             FirstEpisodeDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastEpisodeDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 206, DateTimeKind.Local).AddTicks(9819)
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(1607)
                         },
                         new
                         {
                             Id = 7,
                             BithDate = new DateTime(1962, 7, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(1611),
                             DoctorName = "Dr. Laith Sharaqa",
                             DoctorNumber = 7,
                             FirstEpisodeDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastEpisodeDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 206, DateTimeKind.Local).AddTicks(9822)
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(1614)
                         },
                         new
                         {
                             Id = 8,
                             BithDate = new DateTime(1962, 7, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(1618),
                             DoctorName = "Dr. Hamza Nour",
                             DoctorNumber = 8,
                             FirstEpisodeDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastEpisodeDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 206, DateTimeKind.Local).AddTicks(9825)
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(1620)
                         });
                 });
 
@@ -324,9 +320,7 @@ namespace DoctorWho.Db.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getdate()");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasMaxLength(1800)
@@ -348,66 +342,66 @@ namespace DoctorWho.Db.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(532),
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(2373),
                             Description = "bla bla",
                             EnemyName = "Eric Cartman",
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(544)
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(2388)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(1257),
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(3161),
                             Description = "bla bla",
                             EnemyName = "Vicky",
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(1268)
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(3174)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(1302),
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(3208),
                             Description = "bla bla",
                             EnemyName = "Stewie Griffin",
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(1306)
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(3211)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(1309),
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(3214),
                             Description = "bla bla",
                             EnemyName = "Maleficent",
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(1312)
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(3217)
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(1316),
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(3220),
                             Description = "bla bla",
                             EnemyName = "Mr. Pickles ",
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(1319)
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(3223)
                         },
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(1322),
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(3226),
                             Description = "bla bla",
                             EnemyName = "Ahmad Nassar",
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(1325)
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(3229)
                         },
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(1328),
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(3232),
                             Description = "bla bla",
                             EnemyName = "Mohammad Domidi",
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(1330)
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(3235)
                         },
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(1334),
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(3238),
                             Description = "bla bla",
                             EnemyName = "Ammar Omar",
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(1336)
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(3241)
                         });
                 });
 
@@ -422,9 +416,7 @@ namespace DoctorWho.Db.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getdate()");
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("DoctorId")
                         .HasColumnType("int");
@@ -468,103 +460,103 @@ namespace DoctorWho.Db.Migrations
                         {
                             Id = 1,
                             AuthorId = 1,
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(2040),
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(3971),
                             DoctorId = 1,
                             EpisodeDate = new DateTime(2018, 7, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EpisodeNumber = 1,
                             EpisodeTitle = "TITLE 1",
                             EpisodeType = "TYPE 1",
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(2053),
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(3986),
                             SeriesNumber = 1
                         },
                         new
                         {
                             Id = 2,
                             AuthorId = 2,
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(3896),
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(6307),
                             DoctorId = 2,
                             EpisodeDate = new DateTime(2018, 7, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EpisodeNumber = 1,
                             EpisodeTitle = "TITLE 2",
                             EpisodeType = "TYPE 2",
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(3910),
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(6322),
                             SeriesNumber = 1
                         },
                         new
                         {
                             Id = 3,
                             AuthorId = 3,
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(3979),
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(6393),
                             DoctorId = 3,
                             EpisodeDate = new DateTime(2018, 7, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EpisodeNumber = 1,
                             EpisodeTitle = "TITLE 3",
                             EpisodeType = "TYPE 3",
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(3983),
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(6396),
                             SeriesNumber = 1
                         },
                         new
                         {
                             Id = 4,
                             AuthorId = 3,
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(3988),
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(6401),
                             DoctorId = 4,
                             EpisodeDate = new DateTime(2018, 7, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EpisodeNumber = 1,
                             EpisodeTitle = "TITLE 4",
                             EpisodeType = "TYPE 3",
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(3990),
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(6404),
                             SeriesNumber = 1
                         },
                         new
                         {
                             Id = 5,
                             AuthorId = 4,
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(3994),
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(6408),
                             DoctorId = 5,
                             EpisodeDate = new DateTime(2018, 7, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EpisodeNumber = 1,
                             EpisodeTitle = "TITLE 5",
                             EpisodeType = "TYPE 2",
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(3997),
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(6411),
                             SeriesNumber = 2
                         },
                         new
                         {
                             Id = 6,
                             AuthorId = 5,
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(4001),
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(6415),
                             DoctorId = 6,
                             EpisodeDate = new DateTime(2018, 7, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EpisodeNumber = 1,
                             EpisodeTitle = "TITLE 6",
                             EpisodeType = "TYPE 1",
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(4003),
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(6418),
                             SeriesNumber = 2
                         },
                         new
                         {
                             Id = 7,
                             AuthorId = 6,
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(4007),
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(6422),
                             DoctorId = 7,
                             EpisodeDate = new DateTime(2018, 7, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EpisodeNumber = 1,
                             EpisodeTitle = "TITLE 7",
                             EpisodeType = "TYPE 1",
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(4010),
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(6425),
                             SeriesNumber = 2
                         },
                         new
                         {
                             Id = 8,
                             AuthorId = 8,
-                            CreatedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(4013),
+                            CreatedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(6428),
                             EpisodeDate = new DateTime(2018, 7, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EpisodeNumber = 1,
                             EpisodeTitle = "TITLE 8",
                             EpisodeType = "TYPE 3",
-                            ModifiedAt = new DateTime(2021, 9, 1, 11, 5, 24, 207, DateTimeKind.Local).AddTicks(4016),
+                            ModifiedAt = new DateTime(2021, 9, 1, 9, 57, 54, 672, DateTimeKind.Local).AddTicks(6431),
                             SeriesNumber = 2
                         });
                 });
