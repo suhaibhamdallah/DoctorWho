@@ -158,6 +158,26 @@ namespace DoctorWho.Db
                 .Property(p => p.CreatedAt)
                 .HasDefaultValueSql("getdate()");
 
+            modelBuilder.Entity<Author>()
+                .Property(p => p.ModifiedAt)
+                .HasDefaultValueSql("getdate()");
+
+            modelBuilder.Entity<Companion>()
+                .Property(p => p.ModifiedAt)
+                .HasDefaultValueSql("getdate()");
+
+            modelBuilder.Entity<Doctor>()
+                .Property(p => p.ModifiedAt)
+                .HasDefaultValueSql("getdate()");
+
+            modelBuilder.Entity<Enemy>()
+                .Property(p => p.ModifiedAt)
+                .HasDefaultValueSql("getdate()");
+
+            modelBuilder.Entity<Episode>()
+                .Property(p => p.ModifiedAt)
+                .HasDefaultValueSql("getdate()");
+
             #endregion
         }
     }

@@ -52,7 +52,6 @@ namespace DoctorWho.Web.Services
         public async Task<DoctorDto> AddDoctor(DoctorForManipulationDto doctor)
         {
             var doctorToAdd = _mapper.Map<Doctor>(doctor);
-            doctorToAdd.ModifiedAt = DateTime.Now;
 
             var doctorAdded = await _doctorRepository.Create(doctorToAdd);
 
@@ -67,7 +66,6 @@ namespace DoctorWho.Web.Services
         public DoctorDto UpdateDoctor(DoctorForManipulationDto doctor)
         {
             var doctorToUpdate = _mapper.Map<Doctor>(doctor);
-            doctorToUpdate.ModifiedAt = DateTime.Now;
 
             var updatedDoctor = _doctorRepository.Update(doctorToUpdate);
 

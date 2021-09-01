@@ -18,6 +18,7 @@ namespace DoctorWho.Db.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; }
 
-        public DateTime ModifiedAt { get; set; } = DateTime.Now;
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime ModifiedAt { get; } = DateTime.Now;
     }
 }
