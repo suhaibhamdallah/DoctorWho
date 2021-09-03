@@ -1,10 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace DoctorWho.Db.Models
 {
-    public class Doctor : IModel<int>
+    public class Doctor : BaseModel, IModel<int>
     {
         public int Id { get; set; }
 
@@ -20,11 +19,5 @@ namespace DoctorWho.Db.Models
 
         public DateTime FirstEpisodeDate { get; set; }
         public DateTime LastEpisodeDate { get; set; }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime CreatedAt { get; }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime ModifiedAt { get; } = DateTime.Now;
     }
 }

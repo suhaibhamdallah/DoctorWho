@@ -40,6 +40,7 @@ namespace DoctorWho.Web
             services.AddRequiredServices();
             services.AddRequiredValidators();
             services.AddAuthenticationServices(Configuration);
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

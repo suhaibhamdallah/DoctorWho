@@ -1,10 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DoctorWho.Db.Models
 {
-    public class Companion : IModel<int>
+    public class Companion : BaseModel, IModel<int>
     {
         public int Id { get; set; }
 
@@ -14,11 +12,5 @@ namespace DoctorWho.Db.Models
 
         [MaxLength(200)]
         public string WhoPlayed { get; set; }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime CreatedAt { get; }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime ModifiedAt { get; } = DateTime.Now;
     }
 }

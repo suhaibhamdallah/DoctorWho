@@ -1,11 +1,15 @@
 ﻿using DoctorWho.Db.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 
 namespace DoctorWho.Db
 {
     public class DoctorWhoCoreDbContext : DbContext
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
         public DbSet<Enemy> Enemies { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
@@ -21,9 +25,10 @@ namespace DoctorWho.Db
 
         }
 
-        public DoctorWhoCoreDbContext(DbContextOptions<DoctorWhoCoreDbContext> options) : base(options)
+        public DoctorWhoCoreDbContext(DbContextOptions<DoctorWhoCoreDbContext> options,
+            IHttpContextAccessor httpContextAccessor) : base(options)
         {
-
+            _httpContextAccessor = httpContextAccessor;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -179,6 +184,50 @@ namespace DoctorWho.Db
                 .HasDefaultValueSql("getdate()");
 
             #endregion
+        }
+
+        public override int SaveChanges()
+        {
+            AddTimestamps();
+
+            return base.SaveChanges();
+        }
+
+        private void AddTimestamps()
+        {
+            var entities = ChangeTracker.Entries().Where((x => x.Entity is BaseModel &&
+            x.State == EntityState.Added ||
+            x.State == EntityState.Modified));
+
+            var currentUserId = _httpContextAccessor
+               .HttpContext
+               .User
+               .Claims
+               .FirstOrDefault(claim => claim.Type == "Id")
+               .Value;
+
+            entities.Where(enitiy => enitiy.State == EntityState.Added)
+                .All(entity =>
+                {
+                    ((BaseModel)entity.Entity).CreatedBy = currentUserId;
+                    ((BaseModel)entity.Entity).ModifiedBy = currentUserId;
+
+                    return true;
+                });
+
+            entities.Where(entity => entity.State == EntityState.Modified)
+                .All(entity =>
+                {
+                    var createdBy = entity
+                    .Properties
+                    .FirstOrDefault(p => p.Metadata.GetColumnName().ToLower() == "createdby" || p.Metadata.Name.ToLowerInvariant() == "createdby");
+
+                    createdBy.IsModified = false;
+
+                    ((BaseModel)entity.Entity).ModifiedBy = currentUserId;
+
+                    return true;
+                });
         }
     }
 }

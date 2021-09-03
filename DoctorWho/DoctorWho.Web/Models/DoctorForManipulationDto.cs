@@ -1,8 +1,9 @@
-﻿using System;
+﻿using DoctorWho.Db.Models;
+using System;
 
 namespace DoctorWho.Web.Models
 {
-    public class DoctorForManipulationDto
+    public class DoctorForManipulationDto : BaseModel
     {
         public int? Id { get; set; }
         public int DoctorNumber { get; set; }

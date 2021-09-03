@@ -22,6 +22,6 @@ namespace DoctorWho.Db.Models
         [Required]
         public int AccessLevel { get; set; }
 
-        public string ModifiedBy { get; set; } 
+        public string ModifiedBy { get; set; }
     }
 }
