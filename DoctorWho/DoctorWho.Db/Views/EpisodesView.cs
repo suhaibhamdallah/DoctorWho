@@ -2,7 +2,7 @@
 
 namespace DoctorWho.Db.Models
 {
-    public class EpisodesView : IModel<int>
+    public class EpisodesView : BaseModel, IModel<int>
     {
         public int Id { get; set; }
         public int SeriesNumber { get; set; }
@@ -19,7 +19,5 @@ namespace DoctorWho.Db.Models
         public string DoctorName { get; set; }
         public string Companions { get; set; }
         public string Enemies { get; set; }
-        public string CreatedBy { get; set; }
-        public string ModifiedBy { get; set; }
     }
 }

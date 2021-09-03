@@ -140,60 +140,16 @@ namespace DoctorWho.Db
                 });
 
             #endregion
-
-            #region Create At Property
-
-            modelBuilder.Entity<Author>()
-                .Property(p => p.CreatedAt)
-                .HasDefaultValueSql("getdate()");
-
-            modelBuilder.Entity<Companion>()
-                .Property(p => p.CreatedAt)
-                .HasDefaultValueSql("getdate()");
-
-            modelBuilder.Entity<Doctor>()
-                .Property(p => p.CreatedAt)
-                .HasDefaultValueSql("getdate()");
-
-            modelBuilder.Entity<Enemy>()
-                .Property(p => p.CreatedAt)
-                .HasDefaultValueSql("getdate()");
-
-            modelBuilder.Entity<Episode>()
-                .Property(p => p.CreatedAt)
-                .HasDefaultValueSql("getdate()");
-
-            modelBuilder.Entity<Author>()
-                .Property(p => p.ModifiedAt)
-                .HasDefaultValueSql("getdate()");
-
-            modelBuilder.Entity<Companion>()
-                .Property(p => p.ModifiedAt)
-                .HasDefaultValueSql("getdate()");
-
-            modelBuilder.Entity<Doctor>()
-                .Property(p => p.ModifiedAt)
-                .HasDefaultValueSql("getdate()");
-
-            modelBuilder.Entity<Enemy>()
-                .Property(p => p.ModifiedAt)
-                .HasDefaultValueSql("getdate()");
-
-            modelBuilder.Entity<Episode>()
-                .Property(p => p.ModifiedAt)
-                .HasDefaultValueSql("getdate()");
-
-            #endregion
         }
 
         public override int SaveChanges()
         {
-            AddTimestamps();
+            AddEntityAuditing();
 
             return base.SaveChanges();
         }
 
-        private void AddTimestamps()
+        private void AddEntityAuditing()
         {
             var entities = ChangeTracker.Entries().Where((x => x.Entity is BaseModel &&
             x.State == EntityState.Added ||
@@ -211,6 +167,8 @@ namespace DoctorWho.Db
                 {
                     ((BaseModel)entity.Entity).CreatedBy = currentUserId;
                     ((BaseModel)entity.Entity).ModifiedBy = currentUserId;
+                    ((BaseModel)entity.Entity).CreatedAt = DateTime.Now;
+                    ((BaseModel)entity.Entity).ModifiedAt = DateTime.Now;
 
                     return true;
                 });
@@ -222,9 +180,15 @@ namespace DoctorWho.Db
                     .Properties
                     .FirstOrDefault(p => p.Metadata.GetColumnName().ToLower() == "createdby" || p.Metadata.Name.ToLowerInvariant() == "createdby");
 
+                    var createdAt = entity
+                    .Properties
+                    .FirstOrDefault(p => p.Metadata.GetColumnName().ToLower() == "createdat" || p.Metadata.Name.ToLowerInvariant() == "createdat");
+
                     createdBy.IsModified = false;
+                    createdAt.IsModified = false;
 
                     ((BaseModel)entity.Entity).ModifiedBy = currentUserId;
+                    ((BaseModel)entity.Entity).ModifiedAt = DateTime.Now;
 
                     return true;
                 });
