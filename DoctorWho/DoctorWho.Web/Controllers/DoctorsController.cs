@@ -34,6 +34,7 @@ namespace DoctorWho.Web.Controllers
         /// <returns>Collection of doctors</returns>
         [HttpGet(Name = "GetDoctors")]
         [TypeFilter(typeof(CheckInformationRequestsFilter))]
+        [TypeFilter(typeof(RestrictDataTo5YearsOld))]
         [TypeFilter(typeof(DoctorNamesRedactedFilter))]
         public async Task<ActionResult<IEnumerable<DoctorDto>>> GetDoctors()
         {
@@ -49,6 +50,7 @@ namespace DoctorWho.Web.Controllers
         /// <param name="doctor"></param>
         /// <returns></returns>
         [HttpGet("{doctorId}", Name = "GetDoctor")]
+        [TypeFilter(typeof(RestrictDataTo5YearsOld))]
         public async Task<ActionResult<DoctorDto>> GetDoctor([FromRoute] int doctorId)
         {
             var doctorFromService = await _doctorService.GetDoctor(doctorId);
