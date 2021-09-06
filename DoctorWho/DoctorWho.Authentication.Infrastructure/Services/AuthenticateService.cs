@@ -104,12 +104,7 @@ namespace DoctorWho.Authentication.Infrastructure.Services
                 new Claim(ClaimTypes.Name, userFromDb.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(typeof(NetworkType).Name, userFromDb.NetworkType.ToString())
-            };
-
-            foreach (var userRole in userRoles)
-            {
-                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-            }
+            }.Union(userRoles.Select(userRole => new Claim(ClaimTypes.Role, userRole)));
 
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
@@ -118,8 +113,7 @@ namespace DoctorWho.Authentication.Infrastructure.Services
                 audience: _configuration["JWT:ValidAudience"],
                 expires: DateTime.Now.AddHours(3),
                 claims: authClaims,
-                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-                );
+                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256));
 
             return new SuccessfullLoginResponse(StatusCodes.Status200OK,
                 "Login process success",

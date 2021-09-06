@@ -16,20 +16,15 @@ namespace DoctorWho.Web.Services
     {
         private readonly IRepository<InformationRequest, InformationRequest, string> _informationRequestRepository;
         private readonly IMapper _mapper;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public InformationRequestService(IRepository<InformationRequest, InformationRequest, string> informationRequestRepository,
-            IMapper mapper,
-            IHttpContextAccessor httpContextAccessor)
+            IMapper mapper)
         {
             _informationRequestRepository = informationRequestRepository ??
                 throw new ArgumentNullException(nameof(informationRequestRepository));
 
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
-
-            _httpContextAccessor = httpContextAccessor ??
-                throw new ArgumentNullException(nameof(httpContextAccessor));
         }
 
         /// <summary>
@@ -41,7 +36,6 @@ namespace DoctorWho.Web.Services
         {
             var informationRequestToApprove = await _informationRequestRepository.FindById(requestId);
             informationRequestToApprove.ApprovalStatus = (int)ApprovalStatus.Approved;
-            informationRequestToApprove.ModifiedBy = _httpContextAccessor.GetCurrentUserId();
 
             var approvedInformationRequest = _informationRequestRepository.Update(informationRequestToApprove);
 

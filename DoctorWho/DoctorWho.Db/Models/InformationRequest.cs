@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DoctorWho.Db.Models
 {
-    public class InformationRequest : IModel<string>
+    public class InformationRequest : BaseModel, IModel<string>
     {
         public string Id { get; set; }
 
@@ -21,7 +21,5 @@ namespace DoctorWho.Db.Models
 
         [Required]
         public int AccessLevel { get; set; }
-
-        public string ModifiedBy { get; set; }
     }
 }

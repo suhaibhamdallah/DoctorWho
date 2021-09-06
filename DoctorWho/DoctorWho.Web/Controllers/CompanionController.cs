@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DoctorWho.Web.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/companions")]
     [ApiController]
     public class CompanionController : ControllerBase
     {
