@@ -31,7 +31,7 @@ namespace DoctorWho.Web.Extensions
 
             services.AddTransient<IRepository<EpisodeCompanion, EpisodeCompanion, int>, EpisodeCompanionRepository>();
 
-            services.AddTransient<IRepository<InformationRequest, InformationRequest, string>, InformationRequestRepository>();
+            services.AddTransient<IInformationRequestRepository<InformationRequest, InformationRequest, string>, InformationRequestRepository>();
         }
 
         /// <summary>

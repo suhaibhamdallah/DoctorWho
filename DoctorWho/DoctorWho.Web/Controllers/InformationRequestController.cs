@@ -58,7 +58,7 @@ namespace DoctorWho.Web.Controllers
         {
             var currentUserId = _httpContextAccessor.GetCurrentUserId();
 
-            var userPendingInformationRequests = await _informationRequestService.GetPendingInformationRequests(currentUserId);
+            var userPendingInformationRequests = await _informationRequestService.GetActivePendingInformationRequests(currentUserId);
 
             return Ok(userPendingInformationRequests);
         }
@@ -85,7 +85,7 @@ namespace DoctorWho.Web.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IEnumerable<InformationRequestDto>> GetAllPendingInformationRequests()
         {
-            var pendingInformationRequests = await _informationRequestService.GetPendingInformationRequests();
+            var pendingInformationRequests = await _informationRequestService.GetActivePendingInformationRequests();
 
             return pendingInformationRequests;
         }

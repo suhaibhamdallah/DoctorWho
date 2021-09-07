@@ -2,9 +2,7 @@
 using DoctorWho.Db.Models;
 using DoctorWho.Db.Repositories;
 using DoctorWho.Web.Enums;
-using DoctorWho.Web.Extensions;
 using DoctorWho.Web.Models;
-using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +12,10 @@ namespace DoctorWho.Web.Services
 {
     public class InformationRequestService : IInformationRequestService
     {
-        private readonly IRepository<InformationRequest, InformationRequest, string> _informationRequestRepository;
+        private readonly IInformationRequestRepository<InformationRequest, InformationRequest, string> _informationRequestRepository;
         private readonly IMapper _mapper;
 
-        public InformationRequestService(IRepository<InformationRequest, InformationRequest, string> informationRequestRepository,
+        public InformationRequestService(IInformationRequestRepository<InformationRequest, InformationRequest, string> informationRequestRepository,
             IMapper mapper)
         {
             _informationRequestRepository = informationRequestRepository ??
@@ -66,9 +64,14 @@ namespace DoctorWho.Web.Services
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<InformationRequestDto>> GetApprovedInformationRequests(string userId)
+        public async Task<IEnumerable<InformationRequestDto>> GetActiveApprovedInformationRequests(string userId)
         {
-            var userApprovedInformationRequests = GetInformationRequestsByApprovalStatus(userId, ApprovalStatus.Approved);
+            var currentDateTime = DateTime.Now;
+
+            var userApprovedInformationRequests = (await GetInformationRequestsByApprovalStatus(userId, ApprovalStatus.Approved))
+                .Where(informationRequest =>
+                informationRequest.StartTime < currentDateTime &&
+                informationRequest.EndTime > currentDateTime);
 
             var userApprovedInformationRequestsToReturn = _mapper
                 .Map<IEnumerable<InformationRequestDto>>(userApprovedInformationRequests);
@@ -81,9 +84,14 @@ namespace DoctorWho.Web.Services
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<InformationRequestDto>> GetPendingInformationRequests(string userId)
+        public async Task<IEnumerable<InformationRequestDto>> GetActivePendingInformationRequests(string userId)
         {
-            var userPendingInformationRequests = GetInformationRequestsByApprovalStatus(userId, ApprovalStatus.Unknown);
+            var currentDateTime = DateTime.Now;
+
+            var userPendingInformationRequests = (await GetInformationRequestsByApprovalStatus(userId, ApprovalStatus.Unknown))
+                .Where(informationRequest =>
+                informationRequest.StartTime < currentDateTime &&
+                informationRequest.EndTime > currentDateTime); ;
 
             var userPendingInformationRequestsToReturn = _mapper
                 .Map<IEnumerable<InformationRequestDto>>(userPendingInformationRequests);
@@ -95,7 +103,7 @@ namespace DoctorWho.Web.Services
         /// Get all pending information requests
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<InformationRequestDto>> GetPendingInformationRequests()
+        public async Task<IEnumerable<InformationRequestDto>> GetActivePendingInformationRequests()
         {
             var pendingInformationRequests = await _informationRequestRepository.FindAll();
 
@@ -111,18 +119,10 @@ namespace DoctorWho.Web.Services
         /// <param name="userId"></param>
         /// <param name="approvalStatus"></param>
         /// <returns></returns>
-        private IEnumerable<InformationRequestDto> GetInformationRequestsByApprovalStatus(string userId, ApprovalStatus approvalStatus)
+        private async Task<IEnumerable<InformationRequestDto>> GetInformationRequestsByApprovalStatus(string userId, ApprovalStatus approvalStatus)
         {
-            var currentDateTime = DateTime.Now;
-
-            var userInformationRequests = _informationRequestRepository
-                .FindAll()
-                .Result
-                .Where(informationRequest =>
-                informationRequest.UserId == userId &&
-                informationRequest.ApprovalStatus == (int)approvalStatus &&
-                informationRequest.StartTime < currentDateTime &&
-                informationRequest.EndTime > currentDateTime);
+            var userInformationRequests = await _informationRequestRepository
+                .FindByIdAndApprovalStatus(userId, (int)approvalStatus);
 
             var userInformationRequestsToReturn = _mapper
                 .Map<IEnumerable<InformationRequestDto>>(userInformationRequests);

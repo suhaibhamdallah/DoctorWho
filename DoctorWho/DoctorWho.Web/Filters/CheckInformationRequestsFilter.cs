@@ -27,7 +27,7 @@ namespace DoctorWho.Web.Filters
         {
             var currentUserId = _httpContextAccessor.GetCurrentUserId();
 
-            var userInformationRequest = _informationRequestService.GetApprovedInformationRequests(currentUserId);
+            var userInformationRequest = _informationRequestService.GetActiveApprovedInformationRequests(currentUserId);
 
             var IsAnyApprovedRequest = userInformationRequest
                 .Result
@@ -35,7 +35,7 @@ namespace DoctorWho.Web.Filters
 
             if (!IsAnyApprovedRequest)
             {
-                context.Result = new JsonResult(_informationRequestService.GetPendingInformationRequests(currentUserId).Result);
+                context.Result = new JsonResult(_informationRequestService.GetActivePendingInformationRequests(currentUserId).Result);
             }
         }
     }

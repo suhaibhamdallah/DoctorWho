@@ -33,7 +33,7 @@ namespace DoctorWho.Web.Filters
             var currentUserNetworkType = _httpContextAccessor.GetGurrentUserNetworkType();
 
             var userInformationRequest = _informationRequestService
-                .GetApprovedInformationRequests(currentUserId)
+                .GetActiveApprovedInformationRequests(currentUserId)
                 .Result
                 .FirstOrDefault();
 
