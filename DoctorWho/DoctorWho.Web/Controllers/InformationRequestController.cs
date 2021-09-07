@@ -76,5 +76,18 @@ namespace DoctorWho.Web.Controllers
 
             return approvedInformationRequest;
         }
+
+        /// <summary>
+        /// Get all pending information requests
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("all")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IEnumerable<InformationRequestDto>> GetAllPendingInformationRequests()
+        {
+            var pendingInformationRequests = await _informationRequestService.GetPendingInformationRequests();
+
+            return pendingInformationRequests;
+        }
     }
 }

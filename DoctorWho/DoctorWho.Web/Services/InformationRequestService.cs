@@ -92,6 +92,20 @@ namespace DoctorWho.Web.Services
         }
 
         /// <summary>
+        /// Get all pending information requests
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<InformationRequestDto>> GetPendingInformationRequests()
+        {
+            var pendingInformationRequests = await _informationRequestRepository.FindAll();
+
+            var pendingInformationRequestsToReturn = _mapper
+                .Map<IEnumerable<InformationRequestDto>>(pendingInformationRequests);
+
+            return pendingInformationRequestsToReturn;
+        }
+
+        /// <summary>
         /// Get information request by approvalstatus
         /// </summary>
         /// <param name="userId"></param>
