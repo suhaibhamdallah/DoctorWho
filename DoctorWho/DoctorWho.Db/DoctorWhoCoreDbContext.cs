@@ -1,6 +1,7 @@
 ﻿using DoctorWho.Db.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 
@@ -8,6 +9,8 @@ namespace DoctorWho.Db
 {
     public class DoctorWhoCoreDbContext : DbContext
     {
+        public readonly ILoggerFactory DbContextLoggerFactory;
+
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public DbSet<Enemy> Enemies { get; set; }
@@ -29,10 +32,14 @@ namespace DoctorWho.Db
             IHttpContextAccessor httpContextAccessor) : base(options)
         {
             _httpContextAccessor = httpContextAccessor;
+            DbContextLoggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); });
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            base.OnConfiguring(optionsBuilder);
+
+            optionsBuilder.UseLoggerFactory(DbContextLoggerFactory);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
