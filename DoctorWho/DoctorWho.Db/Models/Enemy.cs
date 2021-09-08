@@ -2,7 +2,7 @@
 
 namespace DoctorWho.Db.Models
 {
-    public class Enemy : IModel<int>
+    public class Enemy : BaseModel, IModel<int>
     {
         public int Id { get; set; }
 

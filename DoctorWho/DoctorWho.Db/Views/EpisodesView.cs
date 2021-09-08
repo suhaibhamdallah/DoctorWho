@@ -2,7 +2,7 @@
 
 namespace DoctorWho.Db.Models
 {
-    public class EpisodesView : IModel<int>
+    public class EpisodesView : BaseModel, IModel<int>
     {
         public int Id { get; set; }
         public int SeriesNumber { get; set; }

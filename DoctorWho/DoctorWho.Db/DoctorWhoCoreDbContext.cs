@@ -1,11 +1,18 @@
 ﻿using DoctorWho.Db.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 
 namespace DoctorWho.Db
 {
     public class DoctorWhoCoreDbContext : DbContext
     {
+        public readonly ILoggerFactory DbContextLoggerFactory;
+
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
         public DbSet<Enemy> Enemies { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
@@ -13,6 +20,7 @@ namespace DoctorWho.Db
         public DbSet<Episode> Episodes { get; set; }
         public DbSet<EpisodeCompanion> EpisodeCompanions { get; set; }
         public DbSet<EpisodeEnemy> EpisodeEnemies { get; set; }
+        public DbSet<InformationRequest> InformationRequests { get; set; }
         public DbSet<EpisodesView> ViewEpisodes { get; set; }
 
         public DoctorWhoCoreDbContext()
@@ -20,13 +28,18 @@ namespace DoctorWho.Db
 
         }
 
-        public DoctorWhoCoreDbContext(DbContextOptions<DoctorWhoCoreDbContext> options) : base(options)
+        public DoctorWhoCoreDbContext(DbContextOptions<DoctorWhoCoreDbContext> options,
+            IHttpContextAccessor httpContextAccessor) : base(options)
         {
-
+            _httpContextAccessor = httpContextAccessor;
+            DbContextLoggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); });
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            base.OnConfiguring(optionsBuilder);
+
+            optionsBuilder.UseLoggerFactory(DbContextLoggerFactory);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -134,6 +147,58 @@ namespace DoctorWho.Db
                 });
 
             #endregion
+        }
+
+        public override int SaveChanges()
+        {
+            AddEntityAuditing();
+
+            return base.SaveChanges();
+        }
+
+        private void AddEntityAuditing()
+        {
+            var entities = ChangeTracker.Entries().Where((x => x.Entity is BaseModel &&
+            x.State == EntityState.Added ||
+            x.State == EntityState.Modified));
+
+            var currentUserId = _httpContextAccessor
+               .HttpContext
+               .User
+               .Claims
+               .FirstOrDefault(claim => claim.Type == "Id")
+               .Value;
+
+            entities.Where(enitiy => enitiy.State == EntityState.Added)
+                .All(entity =>
+                {
+                    ((BaseModel)entity.Entity).CreatedBy = currentUserId;
+                    ((BaseModel)entity.Entity).ModifiedBy = currentUserId;
+                    ((BaseModel)entity.Entity).CreatedAt = DateTime.Now;
+                    ((BaseModel)entity.Entity).ModifiedAt = DateTime.Now;
+
+                    return true;
+                });
+
+            entities.Where(entity => entity.State == EntityState.Modified)
+                .All(entity =>
+                {
+                    var createdBy = entity
+                    .Properties
+                    .FirstOrDefault(p => p.Metadata.GetColumnName().ToLower() == "createdby" || p.Metadata.Name.ToLowerInvariant() == "createdby");
+
+                    var createdAt = entity
+                    .Properties
+                    .FirstOrDefault(p => p.Metadata.GetColumnName().ToLower() == "createdat" || p.Metadata.Name.ToLowerInvariant() == "createdat");
+
+                    createdBy.IsModified = false;
+                    createdAt.IsModified = false;
+
+                    ((BaseModel)entity.Entity).ModifiedBy = currentUserId;
+                    ((BaseModel)entity.Entity).ModifiedAt = DateTime.Now;
+
+                    return true;
+                });
         }
     }
 }

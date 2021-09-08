@@ -1,6 +1,8 @@
-﻿using DoctorWho.Web.Models;
+﻿using DoctorWho.Web.Filters;
+using DoctorWho.Web.Models;
 using DoctorWho.Web.Services;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,7 @@ namespace DoctorWho.Web.Controllers
 {
     [ApiController]
     [Route("api/doctors")]
+    [Authorize]
     public class DoctorsController : ControllerBase
     {
         private readonly IDoctorService _doctorService;
@@ -30,6 +33,9 @@ namespace DoctorWho.Web.Controllers
         /// </summary>
         /// <returns>Collection of doctors</returns>
         [HttpGet(Name = "GetDoctors")]
+        [TypeFilter(typeof(CheckInformationRequestsFilter))]
+        [TypeFilter(typeof(RestrictDataTo5YearsOld))]
+        [TypeFilter(typeof(DoctorNamesRedactedFilter))]
         public async Task<ActionResult<IEnumerable<DoctorDto>>> GetDoctors()
         {
             var doctors = await _doctorService.GetDoctors();
@@ -44,6 +50,7 @@ namespace DoctorWho.Web.Controllers
         /// <param name="doctor"></param>
         /// <returns></returns>
         [HttpGet("{doctorId}", Name = "GetDoctor")]
+        [TypeFilter(typeof(RestrictDataTo5YearsOld))]
         public async Task<ActionResult<DoctorDto>> GetDoctor([FromRoute] int doctorId)
         {
             var doctorFromService = await _doctorService.GetDoctor(doctorId);

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DoctorWho.Db.Models;
 
 namespace DoctorWho.Web.Models
 {
-    public class EnemytDto
+    public class EnemytDto : BaseModel
     {
         public int Id { get; set; }
         public string EnemyName { get; set; }

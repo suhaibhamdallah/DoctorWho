@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DoctorWho.Db.Models
 {
-    public class Episode : IModel<int>
+    public class Episode : BaseModel, IModel<int>
     {
         public int Id { get; set; }
 

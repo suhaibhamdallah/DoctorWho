@@ -2,7 +2,7 @@
 
 namespace DoctorWho.Db.Models
 {
-    public class Companion : IModel<int>
+    public class Companion : BaseModel, IModel<int>
     {
         public int Id { get; set; }
 

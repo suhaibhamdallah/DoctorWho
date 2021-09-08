@@ -1,9 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace DoctorWho.Db.Models
 {
-    public class Doctor : IModel<int>
+    public class Doctor : BaseModel, IModel<int>
     {
         public int Id { get; set; }
 
