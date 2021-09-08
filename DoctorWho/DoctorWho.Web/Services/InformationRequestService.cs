@@ -122,7 +122,7 @@ namespace DoctorWho.Web.Services
         private async Task<IEnumerable<InformationRequestDto>> GetInformationRequestsByApprovalStatus(string userId, ApprovalStatus approvalStatus)
         {
             var userInformationRequests = await _informationRequestRepository
-                .FindByIdAndApprovalStatus(userId, (int)approvalStatus);
+                .FindByUserIdAndApprovalStatus(userId, (int)approvalStatus);
 
             var userInformationRequestsToReturn = _mapper
                 .Map<IEnumerable<InformationRequestDto>>(userInformationRequests);

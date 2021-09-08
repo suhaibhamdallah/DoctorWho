@@ -14,10 +14,10 @@ namespace DoctorWho.Db.Repositories
 
         }
 
-        public async Task<IEnumerable<InformationRequest>> FindByIdAndApprovalStatus(string id, int approvalStatus)
+        public async Task<IEnumerable<InformationRequest>> FindByUserIdAndApprovalStatus(string id, int approvalStatus)
         {
 
-            return await context.Set<InformationRequest>()
+            return await context.InformationRequests
                 .Where(request => request.UserId == id && request.ApprovalStatus == approvalStatus)
                 .ToListAsync();
         }
