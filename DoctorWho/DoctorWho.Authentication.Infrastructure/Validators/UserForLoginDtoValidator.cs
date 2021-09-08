@@ -11,15 +11,22 @@ namespace DoctorWho.Authentication.Infrastructure.Validators
     {
         private readonly IApplicationUserRepository _authenticateHelpers;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
         public UserForLoginDtoValidator(IApplicationUserRepository authenticateHelprs,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager)
         {
             _authenticateHelpers = authenticateHelprs ??
                 throw new ArgumentNullException(nameof(authenticateHelprs));
 
             _userManager = userManager ??
                 throw new ArgumentNullException(nameof(userManager));
+
+            _signInManager = signInManager ??
+                throw new ArgumentNullException(nameof(signInManager));
+
+            CascadeMode = CascadeMode.Stop;
 
             RuleFor(user => user.Username)
                 .NotEmpty()
@@ -36,6 +43,19 @@ namespace DoctorWho.Authentication.Infrastructure.Validators
                     return await _userManager.CheckPasswordAsync(userFromDb, user.Password);
                 })
                 .WithMessage("Incorrect username or password");
+
+            // Check if user confirm his email
+            RuleFor(user => user)
+                .NotEmpty()
+                .MustAsync(async (user, token) =>
+                {
+                    var userFromDb = await _userManager.FindByNameAsync(user.Username);
+
+                    var result = await _signInManager.PasswordSignInAsync(userFromDb, user.Password, false, false);
+
+                    return !result.IsNotAllowed;
+                })
+                .WithMessage("Email Confirmation Required");
         }
     }
 }
