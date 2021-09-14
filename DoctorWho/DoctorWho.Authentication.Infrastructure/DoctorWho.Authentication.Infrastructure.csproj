@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DoctorWho.Authentication.Db\DoctorWho.Authentication.Db.csproj" />
+    <ProjectReference Include="..\DoctorWho.Notification\DoctorWho.Notification.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using DoctorWho.Authentication.Db.Models;
 using DoctorWho.Authentication.Infrastructure.Enumeration;
-using DoctorWho.Authentication.Infrastructure.Repositories;
 using DoctorWho.Authentication.Infrastructure.Models;
+using DoctorWho.Authentication.Infrastructure.Repositories;
+using DoctorWho.Notification.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +15,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace DoctorWho.Authentication.Infrastructure.Services
 {
@@ -23,11 +25,13 @@ namespace DoctorWho.Authentication.Infrastructure.Services
         private readonly IConfiguration _configuration;
         private readonly IApplicationUserRepository _authenticateHelpers;
         private readonly IMapper _mapper;
+        private readonly IEmailSenderService _emailSenderService;
 
         public AuthenticateService(UserManager<ApplicationUser> userManager,
             IConfiguration configuration,
             IMapper mapper,
-            IApplicationUserRepository authenticateHelpers)
+            IApplicationUserRepository authenticateHelpers,
+            IEmailSenderService emailSenderService)
         {
             _userManager = userManager ??
                 throw new ArgumentNullException(nameof(userManager));
@@ -35,11 +39,14 @@ namespace DoctorWho.Authentication.Infrastructure.Services
             _configuration = configuration ??
                 throw new ArgumentNullException(nameof(configuration));
 
-            _authenticateHelpers = authenticateHelpers ?? 
+            _authenticateHelpers = authenticateHelpers ??
                 throw new ArgumentNullException(nameof(authenticateHelpers));
 
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
+
+            _emailSenderService = emailSenderService ??
+                throw new ArgumentNullException(nameof(emailSenderService));
         }
 
         /// <summary>
@@ -60,6 +67,16 @@ namespace DoctorWho.Authentication.Infrastructure.Services
             }
 
             await _authenticateHelpers.AddRoleToUser(userToRegister, UserRoles.User);
+
+            var userCreated = await _userManager.FindByEmailAsync(userToRegister.Email);
+
+            var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(userCreated);
+            var encodedEmailConfirmationToken = HttpUtility.UrlEncode(emailConfirmationToken);
+
+            await _emailSenderService.SendEmailAsync(userToRegister.Email,
+                "Confirm Your Email Address",
+                $"http://localhost:25785/api/auth/confirmEmail?token={encodedEmailConfirmationToken}&email={user.Email}",
+                false);
 
             return new Response(StatusCodes.Status201Created, "User creation process done successfully");
         }
@@ -119,6 +136,36 @@ namespace DoctorWho.Authentication.Infrastructure.Services
                 "Login process success",
                 new JwtSecurityTokenHandler().WriteToken(token),
                 token.ValidTo);
+        }
+
+        /// <summary>
+        /// Confirm user email
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public async Task<Response> ConfirmEmail(string token, string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user is null)
+            {
+
+                return new Response(StatusCodes.Status404NotFound, "User not found");
+            }
+
+            var confirmationResult = await _userManager.ConfirmEmailAsync(user, token);
+
+            if (confirmationResult.Succeeded)
+            {
+
+                return new Response(StatusCodes.Status200OK, "Confirmation Success");
+            }
+            else
+            {
+
+                return new Response(StatusCodes.Status400BadRequest, "Invalid confirmation token");
+            }
         }
     }
 }

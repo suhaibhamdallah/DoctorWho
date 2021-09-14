@@ -16,13 +16,13 @@ namespace DoctorWho.Notification.Services
                 throw new ArgumentNullException(nameof(configuration));
         }
 
-        public async Task SendEmailAsync(string toEmail, string emailSubject, string emailBody, bool isBodyHTML)
+        public async Task SendEmailAsync(string toEmail, string subject, string body, bool isBodyHTML)
         {
             var fromMail = _configuration["EmailSenderService:SenderEmail"];
             var fromPassword = _configuration["EmailSenderService:SenderEmailPassword"];
             var senderDisplayName = _configuration["EmailSenderService:SenderDisplayName"];
 
-            var mailMessage = new MailMessage(fromMail, toEmail, emailSubject, emailBody)
+            var mailMessage = new MailMessage(fromMail, toEmail, subject, body)
             {
                 From = new MailAddress(fromMail, senderDisplayName),
                 IsBodyHtml = isBodyHTML
