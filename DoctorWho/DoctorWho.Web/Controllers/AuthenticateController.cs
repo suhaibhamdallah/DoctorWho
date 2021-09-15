@@ -65,5 +65,22 @@ namespace DoctorWho.Web.Controllers
                 StatusCode = result.StatusCode
             };
         }
+
+        /// <summary>
+        /// Confirm user email
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        [HttpGet("confirmEmail")]
+        public async Task<IActionResult> ConfirmEmail(string token, string email)
+        {
+            var result = await _authenticateService.ConfirmEmail(token, email);
+
+            return new ObjectResult(result)
+            {
+                StatusCode = result.StatusCode
+            };
+        }
     }
 }

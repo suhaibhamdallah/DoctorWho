@@ -1,5 +1,6 @@
 using DoctorWho.Authentication.Infrastructure.Extensions;
 using DoctorWho.Db;
+using DoctorWho.Notification.Extentions;
 using DoctorWho.Web.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -41,6 +42,7 @@ namespace DoctorWho.Web
             services.AddRequiredValidators();
             services.AddAuthenticationServices(Configuration);
             services.AddHttpContextAccessor();
+            services.AddEmailSenderServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

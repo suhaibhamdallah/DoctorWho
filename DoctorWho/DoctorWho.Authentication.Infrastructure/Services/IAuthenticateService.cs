@@ -8,5 +8,6 @@ namespace DoctorWho.Authentication.Infrastructure.Services
         public Task<Response> RegisterUser(UserForCreationDto user);
         public Task<Response> RegisterAdmin(UserForCreationDto user);
         public Task<SuccessfullLoginResponse> Login(UserForLoginDto user);
+        public Task<Response> ConfirmEmail(string token, string email);
     }
 }
